@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Label, Pie, PieChart, Sector } from "recharts";
+import { Cell, Label, Pie, PieChart, Sector } from "recharts";
 import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 import {
@@ -96,17 +96,22 @@ export function AttendancePC({ onTimeCount, lateCount, onLeave }: Props) {
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex-row items-start space-y-1 pb-0">
         <div className="grid gap-1">
-          <CardTitle>Today's Attendance </CardTitle>
-          <CardDescription>{formattedDate}</CardDescription>
+          <CardTitle className="text-maintext">Today's Attendance </CardTitle>
+          <CardDescription className="text-secondarytext">
+            {formattedDate}
+          </CardDescription>
         </div>
         <Select value={activeMonth} onValueChange={setActiveMonth}>
           <SelectTrigger
-            className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
+            className="ml-auto h-8  w-32  rounded-md "
             aria-label="Select a value"
           >
             <SelectValue placeholder="Select month" />
           </SelectTrigger>
-          <SelectContent align="end" className="rounded-xl">
+          <SelectContent
+            align="end"
+            className="rounded-xl flex flex-col gap-2  "
+          >
             {months.map((key) => {
               const config = chartConfig[key as keyof typeof chartConfig];
 
@@ -118,7 +123,7 @@ export function AttendancePC({ onTimeCount, lateCount, onLeave }: Props) {
                 <SelectItem
                   key={key}
                   value={key}
-                  className="rounded-lg [&_span]:flex"
+                  className="rounded-lg [&_span]:flex text-secondarytext"
                 >
                   <div className="flex items-center gap-2 text-xs">
                     <span
@@ -154,6 +159,7 @@ export function AttendancePC({ onTimeCount, lateCount, onLeave }: Props) {
               innerRadius={60}
               strokeWidth={5}
               activeIndex={activeIndex}
+              fill="#FF0000"
               activeShape={({
                 outerRadius = 0,
                 ...props

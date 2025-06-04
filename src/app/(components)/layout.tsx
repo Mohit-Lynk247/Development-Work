@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { Toaster } from "react-hot-toast";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -44,20 +40,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster position="top-right" />
         <SidebarProvider>
           <AppSidebar />
-          <SidebarInset>
-            {/*  navbar for pages  */}
-            <SidebarTrigger />
-
-            {/*  main pages  */}
-
-            <div className="flex flex-1 flex-col px-5  w-full bg-bgprimary max-w-[1600px]  mx-auto">
-              {children}
-            </div>
-          </SidebarInset>
+          <SidebarTrigger children={children} />
+          <Toaster position="top-right" />
         </SidebarProvider>
+        <main></main>
       </body>
     </html>
   );

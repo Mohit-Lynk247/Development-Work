@@ -74,7 +74,7 @@ const Navbar = () => {
       {/* btn for fownload  */}
 
       <Button
-        className="bg-mainbtn  hover:bg-secondarybtn hover:text-mainbtn "
+        className="commonbtn"
         onClick={() => {
           window.location.href =
             "https://github.com/OptimizeInnnovations/Lynk247Updater/releases/download/LynkInstall/Lynk247.exe";

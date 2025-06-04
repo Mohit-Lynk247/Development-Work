@@ -32,39 +32,33 @@ const page = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center h-full w-full">
-          <div className=" w-[100%]  h-full ">
-            <Tabs defaultValue="myCalendar" className="full space-y-6">
-              <TabsList className="grid grid-cols-3   w-[50%] gap-2  ml-5">
+        <div className="flex justify-center items-center h-full w-full mt-5">
+          <div className="w-full h-full">
+            <Tabs defaultValue="myCalendar" className="full">
+              <TabsList className="grid grid-cols-3  w-[500px] ml-5">
                 <TabsTrigger
                   value="myCalendar"
-                  className="py-2"
                   onClick={() => handleTabClick("myCalendar")}
                 >
                   Apply Leaves
                 </TabsTrigger>
                 <TabsTrigger
                   value="leaveStatus"
-                  className="py-2"
                   onClick={() => handleTabClick("leaveStatus")}
                 >
                   Leave Status
                 </TabsTrigger>
                 <TabsTrigger
                   value="approveLeaves"
-                  className="py-2"
                   onClick={() => handleTabClick("approveLeaves")}
                 >
                   Approve Leaves
                 </TabsTrigger>
               </TabsList>
-              <TabsContent
-                value="myCalendar"
-                className="w-full bg-bgsecondary p-2  rounded-lg   "
-              >
+              <TabsContent value="myCalendar" className="w-full mr-5">
                 <LeaveCalendar email={userEmail!} />
               </TabsContent>
-              <TabsContent value="leaveStatus" className="w-full">
+              <TabsContent value="leaveStatus" className="w-full mr-5">
                 <LeaveStatus email={userEmail!} />
               </TabsContent>
               <TabsContent value="approveLeaves">

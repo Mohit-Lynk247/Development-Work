@@ -136,10 +136,9 @@ const App: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="p-4 ">
-                  <div className="h-full w-full overflow-hidden">
-                    <AttendanceTable email={email!} adminFlag={true} />
-                  </div>
+
+                <div className="h-full w-full overflow-hidden">
+                  <AttendanceTable email={email!} adminFlag={true} />
                 </div>
               </div>
             ) : (

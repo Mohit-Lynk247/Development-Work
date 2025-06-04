@@ -6,10 +6,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.check {
+/* .check {
   color: #f43f5ddc;
   color: #6365f1bb;
-}
+} */
 /* For month view */
 .rbc-month-view .rbc-day-bg:hover {
   cursor: pointer;
@@ -105,6 +105,12 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .commonbtn {
+    @apply bg-mainbtn hover:bg-red-500 p-0.5 px-2 text-[0.8rem] hover:shadow-md border-none  shadow-none;
   }
 }
 

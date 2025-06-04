@@ -23,7 +23,6 @@ import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useCreateLeaveMutation, useGetLeaveDataQuery } from "@/store/api";
-import "./custom.css";
 
 type Props = {
   email: string;

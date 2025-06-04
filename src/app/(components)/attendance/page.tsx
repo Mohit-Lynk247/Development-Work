@@ -130,7 +130,7 @@ export default function Page() {
                   </div>
                 </div>
                 <div className="@container/main flex flex-1 flex-col gap-2">
-                  <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                  <div className="flex flex-col gap-4  md:gap-6 md:py-6">
                     <SectionCards
                       email={userEmail!}
                       fromDate={fromDate}
@@ -139,9 +139,8 @@ export default function Page() {
                     />
 
                     {/*  graph section  */}
-
-                    <div className=" grid grid-cols-10 gap-6 px-2">
-                      <div className="col-span-6">
+                    <div className=" grid grid-cols-12 gap-6 px-2">
+                      <div className="col-span-8">
                         <BarChartComponent
                           email={userEmail!}
                           fromDate={fromDate}
@@ -184,8 +183,7 @@ export default function Page() {
                       teamId={teamId}
                     /> */}
                     </div>
-
-                    <div className="overflow-hidden">
+                    <div className="px-3">
                       <AttendanceTable email={userEmail!} adminFlag={true} />
                     </div>
                   </div>
@@ -193,7 +191,7 @@ export default function Page() {
               </div>
             ) : (
               <>
-                <div className="w-full min-h-screen  bg-gray-50">
+                <div className="w-full min-h-screen ">
                   {/* Header Section */}
                   <div className="w-full mb-5">
                     <div className="flex w-full text-gray-900">
@@ -207,17 +205,10 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-rows-1 grid-cols-[35%_65%] ">
-                    <div className="p-4">
-                      <div>
-                        <AttendancePCUser />
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <div className="h-full overflow-hidden">
-                        <AttendanceTable email={userEmail!} adminFlag={false} />
-                      </div>
-                    </div>
+                  <div className="grid grid-rows-1 grid-cols-[30%_70%]  px-2 gap-2 ">
+                    <AttendancePCUser />
+
+                    <AttendanceTable email={userEmail!} adminFlag={false} />
                   </div>
                 </div>
               </>

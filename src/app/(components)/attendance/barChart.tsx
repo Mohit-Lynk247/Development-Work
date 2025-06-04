@@ -86,8 +86,8 @@ export function BarChartComponent({ email, fromDate, toDate, teamId }: Props) {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="#fa9997" radius={4} />
-            <Bar dataKey="mobile" fill="#5f82ea" radius={4} />
+            <Bar dataKey="desktop" fill="#f49e0b" radius={4} />
+            <Bar dataKey="mobile" fill="#6366f1" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

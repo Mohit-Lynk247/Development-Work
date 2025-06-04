@@ -2,10 +2,10 @@
 
 import React from "react";
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
-import { dataGridClassNames } from "@/lib/utils";
+import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { useViewBreakDataQuery, useViewTimesheetDataQuery } from "@/store/api";
 import CircularLoading from "@/components/Sidebar/loading";
-
+import { useTheme } from "next-themes";
 type Props = {
   email: string;
   selectedDate: Date;
@@ -14,6 +14,9 @@ type Props = {
 };
 
 const BreakTable = ({ email, selectedDate, name, userId }: Props) => {
+  const { theme } = useTheme();
+
+  let isDarkMode = theme === "dark";
   const { data, isLoading, error, refetch } = useViewBreakDataQuery(
     { userId: userId, date: String(selectedDate) },
     { refetchOnMountOrArgChange: true }
@@ -79,12 +82,13 @@ const BreakTable = ({ email, selectedDate, name, userId }: Props) => {
       {isLoading ? (
         <CircularLoading />
       ) : (
-        <div className="h-full w-full px-4 pb-8 xl:px-6 max-h-[70vh] mt-5">
+        <div className="h-full w-full   ">
           <DataGrid
             rows={data || []}
             columns={columns}
             className={dataGridClassNames}
             getRowClassName={getRowClassName}
+            sx={dataGridSxStyles(isDarkMode)}
           />
         </div>
       )}

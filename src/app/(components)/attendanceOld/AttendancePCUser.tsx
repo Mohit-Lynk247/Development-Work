@@ -94,17 +94,18 @@ export function AttendancePCUser() {
 
   return (
     <>
-      <div className="pt-6"></div>
-      <Card data-chart={id} className="flex flex-col h-[39vh] w-full">
+      <Card data-chart={id} className="flex flex-col h-full w-full">
         <ChartStyle id={id} config={chartConfig} />
         <CardHeader className="flex-row items-start space-y-0 pb-0">
-          <div className="grid gap-1">
-            <CardTitle>This Month</CardTitle>
-            <CardDescription>{formattedDate}</CardDescription>
+          <div className="grid ">
+            <CardTitle className="text-maintext text-sm">This Month</CardTitle>
+            <CardDescription className="text-secondarytext">
+              {formattedDate}
+            </CardDescription>
           </div>
           <Select value={activeMonth} onValueChange={setActiveMonth}>
             <SelectTrigger
-              className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
+              className="ml-auto h-9 w-40 rounded-lg   focus:outline-none pl-2.5"
               aria-label="Select a value"
             >
               <SelectValue placeholder="Select month" />
@@ -121,7 +122,7 @@ export function AttendancePCUser() {
                   <SelectItem
                     key={key}
                     value={key}
-                    className="rounded-lg [&_span]:flex"
+                    className="rounded-lg [&_span]:flex text-secondarytext py-2"
                   >
                     <div className="flex items-center gap-2 text-xs">
                       <span
@@ -139,11 +140,11 @@ export function AttendancePCUser() {
           </Select>
         </CardHeader>
 
-        <CardContent className="flex flex-1 justify-center pb-0">
+        <CardContent className="flex flex-1 justify-center pb-0 ">
           <ChartContainer
             id={id}
             config={chartConfig}
-            className="mx-auto w-full max-w-full p-4" // Ensure the chart is responsive
+            className="mx-auto w-full max-w-full h-[50vh] " // Ensure the chart is responsive
           >
             <PieChart className="w-full">
               <ChartTooltip

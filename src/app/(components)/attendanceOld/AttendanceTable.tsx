@@ -5,7 +5,8 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { useGetUserAttendanceTableDataQuery } from "@/store/api";
 import { useTheme } from "next-themes";
-import { Button, Chip, CircularProgress } from "@mui/material";
+import { Box, Chip, CircularProgress } from "@mui/material";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ import TimesheetHeader from "../timesheet/TimesheetHeader";
 import { CheckCircleIcon, CircleX, History } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/components/Sidebar/nav-user";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 type Props = {
   email: string;
@@ -202,7 +204,7 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
             icon={icon}
             label={text}
             size="small"
-            sx={{ gap: "4px", paddingLeft: "4px" }}
+            sx={{ gap: "4px", border: "none" }}
           />
         );
       },
@@ -238,20 +240,12 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
             }}
             className=" w-full"
           >
-            <div className="my-3 flex justify-center items-center">
+            <div className=" flex  justify-center items-center">
               {adminPageFlag ? (
                 <>
                   <Button
-                    variant="contained"
-                    className="mb-5"
-                    color="primary"
-                    size="small"
+                    className="commonbtn my-2"
                     onClick={() => handleViewDetails(params.row)}
-                    sx={{
-                      backgroundColor: "#3f51b5",
-                      "&:hover": { backgroundColor: "#2c387e" },
-                      borderRadius: "8px",
-                    }}
                   >
                     View Details
                   </Button>
@@ -259,16 +253,8 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
               ) : (
                 <>
                   <Button
-                    variant="contained"
-                    className="mb-5"
-                    color="primary"
-                    size="small"
+                    className="commonbtn my-2 "
                     onClick={() => handleViewDetailsUser(params.row)}
-                    sx={{
-                      backgroundColor: "#3f51b5",
-                      "&:hover": { backgroundColor: "#2c387e" },
-                      borderRadius: "8px",
-                    }}
                   >
                     View Details
                   </Button>
@@ -294,44 +280,8 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
   };
 
   return (
-    <div className="h-full w-full px-4 pb-8 ">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <div className="my-3 flex justify-center items-center">
-          {/* Dialog Content */}
-          <DialogContent className=" max-h-[80vw] mt-5 mb-5 overflow-y-auto">
-            {" "}
-            {/* Set width to 70% of viewport height */}
-            <DialogHeader>
-              <DialogTitle>
-                {/* {formatDate(selectedDate.toString())} - {rowDataUserName} */}
-                {rowDataUserName}
-              </DialogTitle>
-              <DialogDescription className="text-gray-700 overflow-y-auto">
-                <BreakTable
-                  email={email}
-                  selectedDate={selectedDate}
-                  name={rowDataUserName}
-                  userId={rowDataUserId}
-                />
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button
-                onClick={() => setOpen(false)}
-                variant="contained"
-                sx={{
-                  backgroundColor: "#3f51b5", // Blue color
-                  "&:hover": { backgroundColor: "#2c387e" },
-                  borderRadius: "8px",
-                }}
-              >
-                Close
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </div>
-      </Dialog>
-      <div className="mb-7">
+    <>
+      <div className="">
         {adminPageFlag ? (
           <>
             <TimesheetHeader
@@ -343,17 +293,60 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
         ) : (
           ""
         )}
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <div className="my-3  flex justify-center items-center">
+            {/* Dialog Content */}
+            <DialogContent className="   max-w-4xl   ">
+              {" "}
+              {/* Set width to 70% of viewport height */}
+              <DialogHeader>
+                <DialogTitle className="text-xl font-semibold  tracking-wider text-maintext">
+                  {/* {formatDate(selectedDate.toString())} - {rowDataUserName} */}
+                  {rowDataUserName}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="overflow-y-auto overflow-x-hidden  max-h-[80vh] ">
+                <BreakTable
+                  email={email}
+                  selectedDate={selectedDate}
+                  name={rowDataUserName}
+                  userId={rowDataUserId}
+                />
+              </div>
+              <DialogFooter>
+                <Button className="commonbtn" onClick={() => setOpen(false)}>
+                  Close
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </div>
+        </Dialog>
+
+        <Card className="h-full w-full  bg-bgsecondary   ">
+          <CardContent className="py-7">
+            <Box
+              sx={{
+                flexGrow: 1,
+
+                width: "100%",
+              }}
+            >
+              <DataGrid
+                rows={data || []}
+                columns={columns}
+                autoHeight
+                className={dataGridClassNames}
+                pagination
+                paginationModel={paginationModel}
+                onPaginationModelChange={handlePaginationChange}
+                sx={dataGridSxStyles(isDarkMode)}
+              />
+            </Box>
+          </CardContent>
+        </Card>
       </div>
-      <DataGrid
-        rows={data || []}
-        columns={columns}
-        className={dataGridClassNames}
-        pagination
-        paginationModel={paginationModel}
-        onPaginationModelChange={handlePaginationChange}
-        sx={dataGridSxStyles(isDarkMode)}
-      />
-    </div>
+    </>
   );
 };
 

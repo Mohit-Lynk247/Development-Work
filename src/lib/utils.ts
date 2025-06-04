@@ -17,10 +17,10 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     },
     // Target column headers
     "& .MuiDataGrid-columnHeaders": {
-      color: `${isDarkMode ? "#e5e7eb" : "#000000"}`, // Column header text color
+      color: `${isDarkMode ? "#e5e7eb" : "#0F172A"}`, // Column header text color
       '& [role="row"] > *': {
         fontWeight: "999",
-        backgroundColor: `${isDarkMode ? "#1d1f21" : "#F3F4F6"}`, // Header background
+        backgroundColor: `${isDarkMode ? "#1d1f21" : "#E2E8F0"}`, // Header background
         border: "none", // Remove border from column headers,
       },
     },
@@ -39,19 +39,19 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     "& .MuiDataGrid-cell": {
       // border: "none", // Remove cell borders
       color: `${isDarkMode ? "#e5e7eb" : "#5a5e5e"}`, // Cell text color
-      backgroundColor: `${isDarkMode ? "#1d1f21" : "#ffffff"}`, // Cell background color
+      // backgroundColor: `${isDarkMode ? "#1d1f21" : "#ffffff"}`, // Cell background color,
+      paddingX: "0.6rem",
     },
 
     // Rows styling (specific for dark/light mode) and removing borders
     "& .MuiDataGrid-row": {
       if() {},
       backgroundColor: `${isDarkMode ? "#1d1f21" : "#ffffff"}`, // Row background color
-
+      borderBottom: "0.5px solid #F1F5F9",
     },
     "& .MuiDataGrid-row:hover": {
       // if() {},
-      backgroundColor: `${isDarkMode ? "#1d1f21" : "#e9ecef"}`, // Row background color
-     
+      backgroundColor: `${isDarkMode ? "#1d1f21" : "#CBD5E1"}`, // Row background color
     },
     // Cells with specific borders (remove any borders in these cells as well)
     "& .MuiDataGrid-withBorderColor": {

@@ -42,7 +42,7 @@ const TimesheetHeader = ({
   return (
     <div className="flex relative w-full pl-5 h-[20px] mb-1 items-center justify-between">
       <h1
-        className={`text-2xl font-semibold dark:text-white flex items-center`}
+        className={`text-2xl font-semibold text-maintext dark:text-white flex items-center`}
       >
         {selectedDate.toDateString()}
       </h1>

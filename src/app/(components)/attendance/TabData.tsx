@@ -18,9 +18,9 @@ export function TabsDemo({ userEmail, fromDate, toDate, teamId }: Props) {
   return (
     <div className="w-full">
       <Tabs defaultValue="account" className="w-full ">
-        <TabsList className="w-1/3   flex items-center p-2 gap-4 ">
+        <TabsList className="w-1/3   flex items-center  gap-2 ">
           <TabsTrigger
-            className="w-full p-2 font-medium shadow-none"
+            className="w-full p-2  font-medium shadow-none"
             value="account"
           >
             Late Comers
