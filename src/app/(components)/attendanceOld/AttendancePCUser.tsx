@@ -105,7 +105,7 @@ export function AttendancePCUser() {
           </div>
           <Select value={activeMonth} onValueChange={setActiveMonth}>
             <SelectTrigger
-              className="ml-auto h-9 w-40 rounded-lg   focus:outline-none pl-2.5"
+              className="ml-auto h-9 w-30 rounded-lg   focus:outline-none pl-2.5"
               aria-label="Select a value"
             >
               <SelectValue placeholder="Select month" />
@@ -171,6 +171,7 @@ export function AttendancePCUser() {
                     />
                   </g>
                 )}
+                fill="#6366F1"
               >
                 <Label
                   content={({ viewBox }) => {
