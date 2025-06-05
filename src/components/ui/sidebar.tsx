@@ -296,13 +296,13 @@ const SidebarTrigger = React.forwardRef<
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
 
-        <div className="flex items-center justify-between w-full gap-2">
+        <div className="flex items-center justify-between w-full gap-2 ">
           <NavbarComponent />
 
           <Navbar />
         </div>
       </div>
-      <div className="bg-bgprimary">{children}</div>
+      <div className="bg-bgprimary min-h-screen">{children}</div>
     </div>
   );
 });
