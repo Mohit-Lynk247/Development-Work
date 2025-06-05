@@ -70,7 +70,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="w-full  h-screen items-center flex  bg-bgprimary justify-center">
+    <div className="w-full  h-screen items-center flex  bg-bgsecondary justify-center">
       {/* <Toaster position="top-right" /> */}
       <div className="absolute top-0 right-0  bg-[url('/wave.svg')] w-[70vh] h-[45vh] bg-no-repeat  flex " />
       <div className="absolute bottom-0 right-0  bg-[url('/circle.svg')] w-[38vh] h-[34vh]  flex bg-no-repeat justify-center items-center overflow-hidden" />
@@ -91,7 +91,7 @@ const App: React.FC = () => {
         </h2>
       </div>
 
-      <div className=" lg:w-[25%]  mx-auto flex justify-center border border-gray-200  items-center p-7 py-10 shadow-sm  bg-bgsecondary rounded-lg  box-border oerflow-hidden">
+      <div className=" lg:w-[25%]  mx-auto flex justify-center border border-gray-200  items-center p-7 py-10 shadow-sm  bg-bgprimary/20 rounded-lg  box-border oerflow-hidden">
         <div className="w-full   flex flex-col gap-4">
           {/* <h1 className=" font-semibold text-4xl text-center   text-[#6366f1] tracking-widest font-nunito">
             Signin
@@ -117,7 +117,6 @@ const App: React.FC = () => {
               Please sign in to your account
             </p>
           </div>
-
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="space-y-1">

@@ -51,7 +51,7 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     },
     "& .MuiDataGrid-row:hover": {
       // if() {},
-      backgroundColor: `${isDarkMode ? "#1d1f21" : "#CBD5E1"}`, // Row background color
+      backgroundColor: `${isDarkMode ? "#1d1f21" : "#E2E8F0"}`, // Row background color
     },
     // Cells with specific borders (remove any borders in these cells as well)
     "& .MuiDataGrid-withBorderColor": {

@@ -279,6 +279,7 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
     setPaginationModel(model);
   };
 
+  //  mai content
   return (
     <>
       <div className="">
@@ -293,7 +294,6 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
         ) : (
           ""
         )}
-
         <Dialog open={open} onOpenChange={setOpen}>
           <div className="my-3  flex justify-center items-center">
             {/* Dialog Content */}
@@ -322,8 +322,7 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
             </DialogContent>
           </div>
         </Dialog>
-
-        <Card className="h-full w-full  bg-bgsecondary   ">
+        <Card className=" w-full  bg-bgsecondary   ">
           <CardContent className="py-7">
             <Box
               sx={{

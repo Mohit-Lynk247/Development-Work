@@ -205,7 +205,7 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-rows-1 grid-cols-[30%_70%]  px-2 gap-2 ">
+                  <div className="grid grid-rows-1 grid-cols-[30%_70%]  px-3 gap-2 ">
                     <AttendancePCUser />
 
                     <AttendanceTable email={userEmail!} adminFlag={false} />
