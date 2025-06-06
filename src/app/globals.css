@@ -6,24 +6,32 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*minimum height for data grid means table  */
+.MuiDataGrid-root {
+  min-height: 200px !important;
+}
 /* .check {
   color: #f43f5ddc;
   color: #6365f1bb;
 } */
 /* For month view */
-.rbc-month-view .rbc-day-bg:hover {
+/* .rbc-month-view .rbc-day-bg:hover {
   cursor: pointer;
-  background-color: #f5f5f5; /* optional hover effect */
-}
+  background-color: #f5f5f5; 
+} */
 /* For week/day view */
-.rbc-time-view .rbc-time-slot:hover {
+/* .rbc-time-view .rbc-time-slot:hover {
   cursor: pointer;
-  background-color: #f9f9f9; /* optional */
-}
+  background-color: #f9f9f9; 
+} */
 
 @layer utilities {
   .common-iconbtn {
     @apply cursor-pointer hover:bg-white hover:text-black text-secondarytext  dark:text-white p-2 rounded-lg;
+  }
+
+  .viewbtn{
+    @apply text-mainbtn hover:bg-mainbtn hover:text-white rounded-full transition-all ease-in-out duration-150
   }
 }
 

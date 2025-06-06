@@ -277,7 +277,7 @@ const SidebarTrigger = React.forwardRef<
 
   return (
     <div className="w-full overflow-hidden relative flex flex-col min-w-[1024px] aspect-auto">
-      <div className="flex items-center justify-start bg-bgprimary  py-1 dark:bg-black">
+      <div className="flex items-center justify-start bg-bgprimary py-1 dark:bg-black">
         {/* First Button for toggling sidebar (Left aligned) */}
         <Button
           ref={ref}
@@ -295,14 +295,12 @@ const SidebarTrigger = React.forwardRef<
           <PanelLeft />
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
-
-        <div className="flex items-center justify-between w-full gap-2 ">
-          <NavbarComponent />
-
+        <NavbarComponent />
+        <div className="absolute right-0">
           <Navbar />
         </div>
       </div>
-      <div className="bg-bgprimary min-h-screen">{children}</div>
+      <div className="min-h-screen bg-bgprimary px-2 ">{children}</div>
     </div>
   );
 });

@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Pencil, Download, EllipsisVertical, ChevronLeft } from "lucide-react";
+import {
+  Pencil,
+  Download,
+  EllipsisVertical,
+  ChevronLeft,
+  Trash2,
+  Paperclip,
+} from "lucide-react";
 import {
   useCreateSubTaskMutation,
   useDeleteAttachmentMutation,
@@ -37,6 +44,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CircularLoading from "@/components/Sidebar/loading";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const ProjectPage = () => {
   const projectId = sessionStorage.getItem("projectId");
@@ -396,15 +407,15 @@ const ProjectPage = () => {
     );
 
   return (
-    <div className="w-full max-h-full overflow-y-auto mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6 dark:bg-gray-800 dark:text-white">
+    <div className="flex flex-col gap-10">
       {/* Task Title and Description */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
+      <Card className="space-y-4 p-4  mt-6">
+        <div className="flex justify-between items-center gap-3">
           <button onClick={() => window.history.back()}>
-            <ChevronLeft className="mr-5" />
+            <ChevronLeft size={22} className="text-iconcolor" />
           </button>
           {isEditableProjectName ? (
-            <input
+            <Input
               type="text"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)} // Update state as user types
@@ -416,17 +427,14 @@ const ProjectPage = () => {
           ) : (
             <div className="flex items-center">
               {/* Display the text */}
-              <div className="flex items-center">
-                <h1 className="text-3xl font-semibold">
+              <div className="flex items-center px-2 gap-4">
+                <h1 className="text-2xl text-maintext font-semibold">
                   {projectName} - {project?.projectCode}
                 </h1>
-
                 {/* Pencil icon that appears when hovering over the parent */}
                 <Pencil
                   size={16}
-                  className={`ml-2 cursor-pointer ${
-                    isHovered ? "opacity-100" : "opacity-0"
-                  } transition-opacity`}
+                  className="text-iconcolor hover:text-mainbtn cursor-pointer"
                   onClick={handleEditProjectNameClick}
                 />
               </div>
@@ -434,15 +442,18 @@ const ProjectPage = () => {
           )}
           <div className="flex space-x-4 ml-auto">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex h-8 w-6 mt-1 flex-shrink-0 items-center justify-center dark:text-neutral-500">
-                <EllipsisVertical size={52} />
+              <DropdownMenuTrigger className="flex   focus:outline-none   items-center justify-center dark:text-neutral-500">
+                <EllipsisVertical className="text-iconcolor" size={20} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>Set Project Status :</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-maintext">
+                  Set Project Status
+                </DropdownMenuLabel>
                 <DropdownMenuItem
                   onClick={() => {
                     setProjectStatusFromDropdown(project?.id!, "Pending");
                   }}
+                  className="text-secondarytext"
                 >
                   Pending
                 </DropdownMenuItem>
@@ -450,6 +461,7 @@ const ProjectPage = () => {
                   onClick={() => {
                     setProjectStatusFromDropdown(project?.id!, "In Progress");
                   }}
+                  className="text-secondarytext"
                 >
                   In Progress
                 </DropdownMenuItem>
@@ -458,6 +470,7 @@ const ProjectPage = () => {
                   onClick={() => {
                     setProjectStatusFromDropdown(project?.id!, "Completed");
                   }}
+                  className="text-secondarytext"
                 >
                   Completed
                 </DropdownMenuItem>
@@ -466,6 +479,7 @@ const ProjectPage = () => {
                   onClick={() => {
                     setProjectStatusFromDropdown(project?.id!, "Closed");
                   }}
+                  className="text-secondarytext"
                 >
                   Close Project
                 </DropdownMenuItem>
@@ -474,13 +488,13 @@ const ProjectPage = () => {
           </div>
         </div>
 
-        <div className="space-y-4 text-gray-600 dark:text-gray-400">
+        <div className="space-y-4 px-11 dark:text-gray-400">
           <div className="text-sm flex justify-between items-center">
             {isDateEditable ? (
               <div className="flex gap-4">
                 {" "}
                 {/* Use flex and gap to space inputs */}
-                <input
+                <Input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)} // Update state as user types
@@ -489,7 +503,7 @@ const ProjectPage = () => {
                   className="border p-1 rounded w-30" // Style the input
                 />
                 -
-                <input
+                <Input
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)} // Update state as user types
@@ -499,22 +513,16 @@ const ProjectPage = () => {
                 />
               </div>
             ) : (
-              <div className="flex items-center">
-                {/* Display the text */}
-                <div className="flex items-center">
-                  <span className="cursor-pointer">
-                    {formatDate(startDate)} - {formatDate(dueDate)}
-                  </span>
-
-                  {/* Pencil icon that appears when hovering over the parent */}
-                  <Pencil
-                    size={16}
-                    className={`ml-2 cursor-pointer ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    } transition-opacity`}
-                    onClick={handleDateEditClick}
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <span className="cursor-pointer text-secondarytext">
+                  {formatDate(startDate)} - {formatDate(dueDate)}
+                </span>
+                {/* Pencil icon that appears when hovering over the parent */}
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-mainbtn cursor-pointer"
+                  onClick={handleDateEditClick}
+                />
               </div>
             )}
           </div>
@@ -538,12 +546,13 @@ const ProjectPage = () => {
                 ))}
               </select>
             ) : (
-              <div className="flex items-center">
-                <span className="cursor-pointer">Project Manager: {PM}</span>
-
+              <div className="flex items-center gap-3">
+                <span className="cursor-pointer text-secondarytext">
+                  Project Manager: {PM}
+                </span>
                 <Pencil
                   size={16}
-                  className={`ml-2 cursor-pointer opacity-200 transition-opacity`}
+                  className="text-iconcolor hover:text-mainbtn cursor-pointer"
                   onClick={handleEditPMClick}
                 />
               </div>
@@ -566,20 +575,16 @@ const ProjectPage = () => {
                 ))}
               </select>
             ) : (
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  <span className="cursor-pointer">
-                    Status: {projectStatus}
-                  </span>
-                </div>
-              </div>
+              <span className="cursor-pointer text-secondarytext">
+                Status: {projectStatus}
+              </span>
             )}
           </div>
 
           <div className="text-sm relative">
             {/* Display editable content */}
             {isEditable ? (
-              <input
+              <Input
                 type="text"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)} // Update state as user types
@@ -589,181 +594,171 @@ const ProjectPage = () => {
                 className="border p-1 rounded w-[30vh]" // Style the input
               />
             ) : (
-              <div className="flex items-center">
-                {/* Display the text */}
-                <div className="flex items-center">
-                  <span className="cursor-pointer">
-                    Client Name: {clientName}
-                  </span>
+              <div className="flex items-center gap-3">
+                <span className="cursor-pointer text-secondarytext">
+                  Client Name: {clientName}
+                </span>
 
-                  {/* Pencil icon that appears when hovering over the parent */}
-                  <Pencil
-                    size={16}
-                    className={`ml-2 cursor-pointer ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    } transition-opacity`}
-                    onClick={handleEditClick}
-                  />
-                </div>
+                {/* Pencil icon that appears when hovering over the parent */}
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-mainbtn cursor-pointer"
+                  onClick={handleEditClick}
+                />
+              </div>
+            )}
+          </div>
+          <div className="text-sm relative">
+            {isDescriptionEditable ? (
+              <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                onBlur={handleDescriptionBlur}
+                onKeyDown={handleKeyDown}
+                autoFocus
+                className="border p-1 rounded w-full h-24 resize-none"
+              />
+            ) : (
+              <div
+                className="flex items-center gap-3"
+                onMouseEnter={() => setIsDescriptionHovered(true)}
+                onMouseLeave={() => setIsDescriptionHovered(true)}
+              >
+                <p className="text-secondarytext">
+                  {description || "Loading description..."}
+                </p>
+
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-mainbtn cursor-pointer"
+                  onClick={handleEditDescriptionClick}
+                />
               </div>
             )}
           </div>
         </div>
 
-        <div className="text-sm relative">
-          {isDescriptionEditable ? (
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              onBlur={handleDescriptionBlur}
-              onKeyDown={handleKeyDown}
-              autoFocus
-              className="border p-1 rounded w-full h-24 resize-none"
-            />
-          ) : (
-            <div
-              className="flex items-center"
-              onMouseEnter={() => setIsDescriptionHovered(true)}
-              onMouseLeave={() => setIsDescriptionHovered(true)}
-            >
-              <p className="text-gray-700 dark:text-gray-300 cursor-pointer">
-                {description || "Loading description..."}
-              </p>
-
-              <div
-                className={`ml-2 cursor-pointer ${
-                  isDescriptionHovered ? "opacity-100" : "opacity-0"
-                } transition-opacity`}
-              >
-                <Pencil
-                  size={16}
-                  style={{ width: "16px", height: "16px" }}
-                  onClick={handleEditDescriptionClick}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
         <div className="flex justify-end">
-          <button
+          <Button
+            className="commonbtn"
             onClick={handleSaveChanges}
             disabled={!isSaveButtonEnabled}
-            className={`mt-2 bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-700 ${
-              !isSaveButtonEnabled && "opacity-50 cursor-not-allowed"
-            }`}
           >
             Save Changes
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
       {/* Attachments Section */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Attachments</h2>
+      <Card className="space-y-4 p-3">
+        <h2 className="text-xl font-semibold text-maintext  ">Attachments</h2>
         <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg dark:border-gray-600">
-          <div className="flex items-center justify-between">
-            <div className="flex space-x-4">
-              <div className="space-y-2">
-                {" "}
-                {/* Use space-y-2 to add vertical spacing between attachments */}
-                {(project?.projectAttachments?.length ?? 0) > 0 ? (
-                  <>
-                    {project?.projectAttachments.map((attachment, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center space-x-2"
-                        >
-                          {/* Attachment icon */}
-                          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                            <span className="text-2xl text-gray-500">📎</span>
-                          </div>
-                          {/* Attachment file name */}
-                          <span className="text-gray-800 dark:text-gray-100">
-                            {attachment?.fileName}
-                          </span>
-                          {/* Download button */}
-                          <button
-                            className="text-blue-600 hover:text-blue-800 ml-2"
-                            onClick={async () => {
-                              await downloadAttachment(attachment.id);
-                            }}
-                          >
-                            <Download />
-                          </button>
-
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <button className="text-blue-600 hover:text-blue-800 ml-2">
-                                Delete
-                              </button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Are you sure?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription className="text-gray-700">
-                                  Do you want to remove the Attachment :{" "}
-                                  {attachment.fileName} ?
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel
-                                  onClick={() => {
-                                    //setOpen(false);
-                                  }}
-                                >
-                                  No
-                                </AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={async () => {
-                                    await deleteAttachment(attachment.id); // Await your async function here
-                                  }}
-                                >
-                                  Yes
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+          <div className="space-y-2">
+            {" "}
+            {/* Use space-y-2 to add vertical spacing between attachments */}
+            {(project?.projectAttachments?.length ?? 0) > 0 ? (
+              <>
+                {project?.projectAttachments.map((attachment, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-center space-x-2 justify-between  "
+                    >
+                      <div className="flex items-center gap-2">
+                        {/* Attachment icon */}
+                        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                          <span className="text-2xl text-gray-500">📎</span>
                         </div>
-                      );
-                    })}
-                  </>
-                ) : (
-                  "Please upload a document of size less than 1 MB"
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="mt-4">
-            <div>
-              {isLoadingUploadAttachment && (
-                <Progress value={uploadProgress} max={100} color="blue" />
-              )}
-              {(project?.projectAttachments?.length ?? 0) > 2 ? (
-                ""
-              ) : (
-                <button
-                  className="flex items-center justify-start w-full p-3 text-blue-600 hover:text-blue-800 rounded-md hover:bg-gray-200 focus:outline-none transition duration-200"
-                  onClick={() => document.getElementById("fileInput")?.click()}
-                >
-                  + Add Attachment
-                </button>
-              )}
+                        {/* Attachment file name */}
+                        <span className="text-secondarytext dark:text-gray-100">
+                          {attachment?.fileName}
+                        </span>
+                      </div>
 
-              {/* Hidden file input */}
-              <input
-                id="fileInput"
-                type="file"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-            </div>
+                      <div className="flex items-end gap-2 ">
+                        {/* Download button */}
+                        <button
+                          className="text-mainbtn hover:text-white hover:bg-mainbtn rounded-full p-1 "
+                          onClick={async () => {
+                            await downloadAttachment(attachment.id);
+                          }}
+                        >
+                          <Download size={20} />
+                        </button>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <button className="text-mainbtn hover:text-white hover:bg-mainbtn rounded-full p-1 ">
+                              <Trash2 size={20} />
+                            </button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="text-maintext">
+                                Are you sure?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription className="text-secondarytext">
+                                Do you want to remove the Attachment :{" "}
+                                {attachment.fileName} ?
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel
+                                className="w-20"
+                                onClick={() => {
+                                  //setOpen(false);
+                                }}
+                              >
+                                No
+                              </AlertDialogCancel>
+                              <AlertDialogAction
+                                className="commonbtn  w-20"
+                                onClick={async () => {
+                                  await deleteAttachment(attachment.id); // Await your async function here
+                                }}
+                              >
+                                Yes
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <span className="text-red-500 text-sm">
+                Please upload a document of size less than 1 MB
+              </span>
+            )}
+          </div>
+
+          <div>
+            {isLoadingUploadAttachment && (
+              <Progress value={uploadProgress} max={100} color="blue" />
+            )}
+            {(project?.projectAttachments?.length ?? 0) > 2 ? (
+              ""
+            ) : (
+              <button
+                className="flex items-center justify-start gap-2 w-full p-3   mt-3  text-mainbtn  hover:text-blue-800 rounded-md hover:bg-gray-200 focus:outline-none transition duration-200"
+                onClick={() => document.getElementById("fileInput")?.click()}
+              >
+                <Paperclip size={18} /> Add Attachment
+              </button>
+            )}
+
+            {/* Hidden file input */}
+            <Input
+              id="fileInput"
+              type="file"
+              className="hidden"
+              onChange={handleFileChange}
+            />
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

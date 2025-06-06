@@ -191,20 +191,16 @@ export default function Page() {
               </div>
             ) : (
               <>
-                <div className="w-full min-h-screen ">
+                <div className="w-full space-y-2  ">
                   {/* Header Section */}
-                  <div className="w-full mb-5">
-                    <div className="flex w-full text-gray-900">
-                      <div className="pb-4 pt-1 lg:pb-4 lg:pt-8 w-full">
-                        <Header
-                          name="Attendance"
-                          hasFilters={false}
-                          hasTeamFilter={false}
-                          buttonName="Add User"
-                        />
-                      </div>
-                    </div>
-                  </div>
+
+                  <Header
+                    name="Attendance"
+                    hasFilters={false}
+                    hasTeamFilter={false}
+                    buttonName="Add User"
+                  />
+
                   <div className="grid grid-rows-1 grid-cols-[30%_70%]  px-3 gap-2 ">
                     <AttendancePCUser />
 

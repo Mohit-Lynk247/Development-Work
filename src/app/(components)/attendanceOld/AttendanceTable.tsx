@@ -17,10 +17,11 @@ import {
 } from "@/components/ui/dialog";
 import BreakTable from "./BreakTable";
 import TimesheetHeader from "../timesheet/TimesheetHeader";
-import { CheckCircleIcon, CircleX, History } from "lucide-react";
+import { CheckCircleIcon, CircleX, Eye, History } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/components/Sidebar/nav-user";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import ViewButton from "@/components/customButton/viewButton";
 
 type Props = {
   email: string;
@@ -238,29 +239,43 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
               justifyContent: "center",
               alignItems: "center",
             }}
-            className=" w-full"
+            className=" w-full flex items-center justify-center  h-full"
           >
-            <div className=" flex  justify-center items-center">
-              {adminPageFlag ? (
-                <>
-                  <Button
+            {adminPageFlag ? (
+              <>
+                {/* <Button
                     className="commonbtn my-2"
                     onClick={() => handleViewDetails(params.row)}
                   >
                     View Details
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
+                  </Button> */}
+
+                <ViewButton
+                  onClick={() => handleViewDetails(params.row)}
+                  text={"View Details"}
+                />
+              </>
+            ) : (
+              <>
+                {/* <Button
                     className="commonbtn my-2 "
                     onClick={() => handleViewDetailsUser(params.row)}
                   >
                     View Details
-                  </Button>
-                </>
-              )}
-            </div>
+                  </Button> */}
+                {/* <button
+                  className="viewbtn"
+                  onClick={() => handleViewDetailsUser(params.row)}
+                >
+                  <Eye />
+                </button> */}
+
+                <ViewButton
+                  onClick={() => handleViewDetailsUser(params.row)}
+                  text={"View Details"}
+                />
+              </>
+            )}
           </div>
         );
       },
@@ -322,8 +337,8 @@ const AttendanceTable = ({ email, adminFlag }: Props) => {
             </DialogContent>
           </div>
         </Dialog>
-        <Card className=" w-full  bg-bgsecondary   ">
-          <CardContent className="py-7">
+        <Card className=" w-full   bg-bgsecondary   ">
+          <CardContent className="py-7 h-full">
             <Box
               sx={{
                 flexGrow: 1,

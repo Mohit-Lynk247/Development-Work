@@ -239,11 +239,11 @@ const Header = ({
   );
 
   return (
-    <div className="flex relative w-full pl-5 h-[20px] mb-1 items-center justify-between">
+    <div className="flex relative w-full px-4 py-2   items-center justify-between">
       <h1
         className={`${
           isSmallText ? "text-lg" : "text-2xl"
-        } font-semibold dark:text-white flex items-center`}
+        } font-semibold dark:text-white flex items-center text-maintext tracking-wider`}
       >
         {icon}
         {name}

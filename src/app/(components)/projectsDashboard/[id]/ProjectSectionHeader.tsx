@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronLeft, PlusSquare } from "lucide-react";
 import { useCreateSprintMutation } from "@/store/api";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   name: string;
@@ -72,24 +73,24 @@ const ProjectSectionHeader = ({
   };
 
   return (
-    <div className="flex relative w-full pl-4 h-[20px] mb-1 items-center justify-between">
+    <div className="flex relative w-full  items-center justify-between">
       <h1
         className={`${
           isSmallText ? "text-lg" : "text-2xl"
-        } font-semibold dark:text-white flex items-center`}
+        } font-semibold dark:text-white text-maintext gap-2 flex items-center`}
       >
         <button onClick={() => window.history.back()}>
-          <ChevronLeft className="mr-5" />
+          <ChevronLeft className="text-iconcolor" />
         </button>
         {name}
       </h1>
       <div className="flex items-center space-x-4 mr-5 overflow-auto">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <button className="flex items-center rounded-md bg-blue-600 px-3 py-2 text-white hover:bg-blue-500">
-              <PlusSquare className="h-5 w-5 mr-2 " />
+            <Button className="commonbtn flex items-center gap-2">
+              <PlusSquare size={20} />
               {buttonName}
-            </button>
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[45vw] lg:max-w-[45vw] max-h-[29vw] overflow-auto">
             <DialogHeader>

@@ -11,6 +11,7 @@ import { PlusSquare, PresentationIcon } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   useCreateProjectMutation,
   useGetProjectManagerQuery,
@@ -23,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   name: string;
@@ -111,11 +113,11 @@ const ProjectsHeader = ({ name, isSmallText = false, buttonName }: Props) => {
   };
 
   return (
-    <div className="flex relative w-full pl-5 h-[20px] mb-1 items-center justify-between">
+    <div className="flex relative py-7 w-full  items-center justify-between">
       <h1
         className={`${
           isSmallText ? "text-lg" : "text-2xl"
-        } font-semibold dark:text-white flex items-center`}
+        } font-semibold dark:text-white flex items-center text-maintext tracking-wider`}
       >
         <PresentationIcon className="mr-2" />
         {name}
@@ -125,130 +127,136 @@ const ProjectsHeader = ({ name, isSmallText = false, buttonName }: Props) => {
           <div className="flex items-center space-x-4 mr-5">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <button className="flex items-center rounded-md bg-blue-600 px-3 py-2 text-white hover:bg-blue-500">
-                  <PlusSquare className="h-5 w-5 mr-2 " />
+                <Button className="commonbtn flex items-center gap-2">
+                  <div>
+                    <PlusSquare size={22} />
+                  </div>
                   {buttonName}
-                </button>
+                </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[42vw] lg:max-w-[42vw] h-[28vw] overflow-auto">
+              <DialogContent className=" max-w-4xl">
                 <DialogHeader>
-                  <DialogTitle className="mb-2">Create Project</DialogTitle>
+                  <DialogTitle className="text-maintext tracking-wide">
+                    Create Project
+                  </DialogTitle>
                 </DialogHeader>
 
-                <div
-                  className="relative w-full h-full overflow-auto"
-                  style={{
-                    paddingTop: "60.575%",
-                  }}
-                >
-                  <div className="absolute top-0 left-0 w-[calc(100%)] h-full">
-                    <form onSubmit={handleSubmit}>
-                      <div className="grid gap-4 py-3">
-                        <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                          <Label className="text-center ">
-                            Project Name
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="col-span-7"
-                            required
-                          />
-                          <Label className="text-center ">Client Name</Label>
-                          <Input
-                            value={clientName}
-                            onChange={(e) => setClientName(e.target.value)}
-                            className="col-span-7"
-                            required
-                          />
-                          <Label className="text-center">
-                            Project Description
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            className="col-span-7 shadow border"
-                          />
-                          <Label className="text-center ">
-                            Project Code
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            value={projectCode}
-                            onChange={(e) => {
-                              const newValue = e.target.value;
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Project Name
+                      </Label>
+                      <Input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                        placeholder="Enter project name"
+                      />
+                    </div>
 
-                              handleChange(newValue);
-                            }}
-                            className="col-span-7"
-                            required
-                          />
-                          <Label className="text-center">
-                            Start Date
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                            className="col-span-3"
-                          />
-                          <Label className="text-center">
-                            End Date<span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            className="col-span-3"
-                          />
-                          <Label className="text-center">
-                            Project Manager
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Select
-                            value={projectManager}
-                            onValueChange={(value) => setProjectManager(value)}
-                          >
-                            <SelectTrigger className="col-span-7 p-2 border rounded-md">
-                              <SelectValue placeholder="Select Project Manager" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                {data?.map((user) => (
-                                  <SelectItem
-                                    key={user.username}
-                                    value={user.username}
-                                  >
-                                    {user.username}
-                                  </SelectItem>
-                                ))}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <button
-                          type="submit"
-                          className={`flex w-200px mt-2 justify-center rounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                                hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                                  !isFormValid() || isLoadingCreateProject
-                                    ? "cursor-not-allowed opacity-50"
-                                    : ""
-                                }`}
-                          disabled={!isFormValid() || isLoadingCreateProject}
-                        >
-                          {isLoadingCreateProject
-                            ? "Creating..."
-                            : "Create Project"}
-                        </button>
-                      </DialogFooter>
-                    </form>
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className=" ">Client Name</Label>
+                      <Input
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        required
+                        placeholder="Enter client name"
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Project Code
+                      </Label>
+                      <Input
+                        value={projectCode}
+                        onChange={(e) => {
+                          const newValue = e.target.value;
+
+                          handleChange(newValue);
+                        }}
+                        required
+                        placeholder="Enter project code"
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Start Date
+                      </Label>
+                      <Input
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        End Date
+                      </Label>
+                      <Input
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-2 flex-col">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Project Manager
+                      </Label>
+                      <Select
+                        value={projectManager}
+                        onValueChange={(value) => setProjectManager(value)}
+                      >
+                        <SelectTrigger className="col-span-7 p-2 border rounded-md">
+                          <SelectValue placeholder="Select Project Manager" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {data?.map((user) => (
+                              <SelectItem
+                                key={user.username}
+                                value={user.username}
+                              >
+                                {user.username}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="flex items-start gap-2 flex-col">
+                    <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                      Project Description
+                    </Label>
+                    <Textarea
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <DialogFooter>
+                    <Button
+                      type="submit"
+                      className={`commonbtn ${
+                        !isFormValid() || isLoadingCreateProject
+                          ? "cursor-not-allowed opacity-50"
+                          : ""
+                      }`}
+                      disabled={!isFormValid() || isLoadingCreateProject}
+                    >
+                      {isLoadingCreateProject
+                        ? "Creating..."
+                        : "Create Project"}
+                    </Button>
+                  </DialogFooter>
+                </form>
               </DialogContent>
             </Dialog>
           </div>

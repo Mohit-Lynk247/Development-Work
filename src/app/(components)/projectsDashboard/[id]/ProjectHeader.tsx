@@ -49,8 +49,8 @@ const ProjectHeader = ({
   );
 
   return (
-    <div className="px-4 xl:px-4">
-      <div className="pb-6 pt-6 lg:pb-4 lg:pt-8 mb-3 mt-3">
+    <div className="space-y-3">
+      <div className="py-8">
         <ProjectSectionHeader
           name={projectName || "Project"}
           buttonName="Create New Sprint"
@@ -58,27 +58,59 @@ const ProjectHeader = ({
           projectId={projectId}
         />
       </div>
-      <div className="p-2 flex justify-between items-center dark:border-gray-600 rounded-lg">
-        <div className="w-full sm:w-[25%] h-8 p-1 bg-green-700 dark:bg-gray-800 rounded-lg flex flex-col items-center">
-          <span className="font-semibold text-lg text-center text-white">
-            Estimated Hours : {data?.totalHours}
-          </span>
+      <div className="p-1 flex  gap-6 items-center dark:border-gray-600 ">
+        <div className="bg-green-600  p-1 px-6 flex items-center justify-center text-white font-semibold  rounded-full">
+          Estimated Hours : {data?.totalHours}
         </div>
-        <div className="w-full sm:w-[25%] h-8 p-1 bg-[#3f51b5] dark:bg-gray-800 rounded-lg flex flex-col items-center">
-          <span className="font-semibold text-lg text-center text-white">
-            Total Consumed Hours : {data?.consumedHours}
-          </span>
+        <div className="bg-blue-600 text-white font-semibold  p-1 px-6  rounded-full">
+          Total Consumed Hours : {data?.consumedHours}
         </div>
-
-        <div className="w-full sm:w-[25%] h-8 p-1 bg-red-500 dark:bg-gray-800 rounded-lg flex flex-col items-center">
-          <span className="font-semibold text-lg text-center text-white">
-            Total Hours Overrun : {data?.hoursOverrun}
-          </span>
+        <div className="bg-red-600  text-white font-semibold p-1 px-6  rounded-full">
+          Total Hours Overrun : {data?.hoursOverrun}
         </div>
       </div>
 
-      <div className="flex flex-wrap-reverse mt-2 gap-1 border-y border-gray-200 pb-[4px] pt-1 dark:border-stroke-dark sm:items-center">
-        <div className="flex flex-1 items-center gap-1 md:gap-4">
+      <div className="flex  flex-col gap-2   p-1 dark:border-stroke-dark ">
+        <div className="flex items-center p-1 w-full justify-between  gap-2">
+          <div className="flex items-center gap-4">
+            <SubTaskFilter
+              isTaskOrSubTask={isTaskOrSubTask}
+              setIsTaskOrSubTask={setIsTaskOrSubTask}
+              setPriority={setPriority}
+              email={email}
+            />
+            <SprintFilter
+              sprint={sprint}
+              setSprint={setSprint}
+              projectId={String(projectId)}
+            />
+            {isTaskOrSubTask === "Task" ? (
+              <HeaderFilter priority={priority} setPriority={setPriority} />
+            ) : (
+              ""
+            )}
+            <TaskSelectionFilter
+              assignedTo={assignedTo}
+              setAssignedTo={setAssignedTo}
+              email={email}
+            />
+          </div>
+
+          <div className="bg-bgsecondary ">
+            <Button
+              className=""
+              onClick={() => {
+                setPriority("");
+                setAssignedTo("X");
+                setSprint("");
+                setIsTaskOrSubTask("Task");
+              }}
+            >
+              <FilterX className="text-iconcolor" />
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-1 bg-bgsecondary rounded-lg items-center gap-1 md:gap-4">
           <TabButton
             name="Kanban Board"
             icon={<Grid3X3 className="h-5 w-5" />}
@@ -109,41 +141,6 @@ const ProjectHeader = ({
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           /> */}
-        </div>
-        <div className="flex items-center gap-2">
-          <SubTaskFilter
-            isTaskOrSubTask={isTaskOrSubTask}
-            setIsTaskOrSubTask={setIsTaskOrSubTask}
-            setPriority={setPriority}
-            email={email}
-          />
-          <SprintFilter
-            sprint={sprint}
-            setSprint={setSprint}
-            projectId={String(projectId)}
-          />
-          {isTaskOrSubTask === "Task" ? (
-            <HeaderFilter priority={priority} setPriority={setPriority} />
-          ) : (
-            ""
-          )}
-          <TaskSelectionFilter
-            assignedTo={assignedTo}
-            setAssignedTo={setAssignedTo}
-            email={email}
-          />
-
-          <Button
-            className="bg-gray-200 hover:bg-gray-100"
-            onClick={() => {
-              setPriority("");
-              setAssignedTo("X");
-              setSprint("");
-              setIsTaskOrSubTask("Task");
-            }}
-          >
-            <FilterX className="text-gray-800" />
-          </Button>
         </div>
       </div>
     </div>

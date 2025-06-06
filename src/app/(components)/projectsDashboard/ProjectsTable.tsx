@@ -5,11 +5,13 @@ import Header from "@/components/Header";
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
-import { Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useGetProjectsQuery } from "@/store/api";
+import { Eye, View } from "lucide-react";
+import ViewButton from "@/components/customButton/viewButton";
 
 type Props = {
   email: string;
@@ -123,39 +125,36 @@ const ProjectsTable = ({ email, closedProjectFlag }: Props) => {
       width: 150,
       renderCell: (params) => {
         return (
-          <div className="flex justify-center items-center h-full">
-            <Link href={`/projectsDashboard/${params.value}?email=${email}`}>
-              <Button
-                variant="contained"
-                className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
-                onClick={() => {
-                  sessionStorage.setItem("projectName", params.row.name);
-                  sessionStorage.setItem("projectId", params.row.id);
-                }}
-              >
-                View
-              </Button>
-            </Link>
-          </div>
+          <Link
+            className=" w-full  flex items-center justify-center h-full"
+            href={`/projectsDashboard/${params.value}?email=${email}`}
+          >
+            <ViewButton
+              text={"View Detail"}
+              onClick={() => {
+                sessionStorage.setItem("projectName", params.row.name);
+                sessionStorage.setItem("projectId", params.row.id);
+              }}
+            />
+          </Link>
         );
       },
     },
   ];
 
   return (
-    <div className="h-full w-full px-4 pb-8 xl:px-6">
-      <div className="pt-5">
-        <Header name="Table" isSmallText />
-      </div>
-      <Card>
+    <Card className="h-full w-full bg-bgsecondary  ">
+      <Header name="Table" isSmallText />
+
+      <CardContent>
         <DataGrid
           rows={data || []}
           columns={columns}
           className={dataGridClassNames}
           sx={dataGridSxStyles(isDarkMode)}
         />
-      </Card>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

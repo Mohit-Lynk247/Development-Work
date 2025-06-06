@@ -404,7 +404,7 @@ const TableView = ({
           rows={tasks?.tasks || []}
           columns={columns}
           className={dataGridClassNames}
-          //sx={dataGridSxStyles(isDarkMode)}
+          sx={dataGridSxStyles(isDarkMode)}
           getRowClassName={getRowClassName}
         />
       </Card>

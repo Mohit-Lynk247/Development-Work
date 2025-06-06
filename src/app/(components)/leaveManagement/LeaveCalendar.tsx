@@ -32,7 +32,7 @@ type Result = {
   title: string;
   description: string;
   approvalStatus: string;
-  date: string;
+  date: Date;
   year: string;
   username: string;
   userId: number;
@@ -79,7 +79,8 @@ const LeaveCalendar = ({ email }: Props) => {
     const Result = {
       title: leave.leaveType,
       description: leave.description,
-      date: leave.date,
+
+      date: new Date(leave.date),
       username: leave.username,
       userId: leave.userId,
       approvalStatus: leave.approvalStatus,
@@ -100,6 +101,8 @@ const LeaveCalendar = ({ email }: Props) => {
       return title;
     }
   };
+
+  console.log(resultList);
 
   const eventPropGetter = (event: any) => {
     let backgroundColor = "#3f51b5"; // default blue

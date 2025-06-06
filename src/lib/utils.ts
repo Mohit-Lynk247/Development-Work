@@ -14,6 +14,7 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     "& .MuiDataGrid-root": {
       backgroundColor: `${isDarkMode ? "#121212" : "#e9ecef"}`, // Set grid background color
       border: "none", // Remove grid border completely
+      
     },
     // Target column headers
     "& .MuiDataGrid-columnHeaders": {

@@ -36,17 +36,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <>
+      <div className="min-h-screen">
         <SidebarProvider>
           <AppSidebar />
           <SidebarTrigger children={children} />
           <Toaster position="top-right" />
         </SidebarProvider>
-        <main></main>
-      </body>
-    </html>
+      </div>
+    </>
   );
 }
