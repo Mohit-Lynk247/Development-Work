@@ -113,13 +113,13 @@ const ProjectsHeader = ({ name, isSmallText = false, buttonName }: Props) => {
   };
 
   return (
-    <div className="flex relative py-7 w-full  items-center justify-between">
+    <div className="flex relative py-2 w-full  p-2 rounded-lg  items-center justify-between">
       <h1
         className={`${
           isSmallText ? "text-lg" : "text-2xl"
         } font-semibold dark:text-white flex items-center text-maintext tracking-wider`}
       >
-        <PresentationIcon className="mr-2" />
+        <PresentationIcon  className="mr-2 text-iconcolor" />
         {name}
       </h1>
       {buttonName !== "" ? (

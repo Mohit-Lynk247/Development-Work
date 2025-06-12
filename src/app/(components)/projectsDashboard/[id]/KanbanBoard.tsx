@@ -36,9 +36,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DialogTitle } from "@mui/material";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -67,6 +68,8 @@ import {
 } from "@/components/ui/card";
 import BulkCreate from "./[taskId]/BulkCreate";
 import CircularLoading from "@/components/Sidebar/loading";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type BoardProps = {
   id: string;
@@ -223,7 +226,7 @@ const BoardView = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 xl:grid-cols-4">
         {taskStatus.map((status) => (
           <TaskColumn
             key={status}
@@ -401,22 +404,21 @@ const TaskColumn = ({
       ref={(instance) => {
         drop(instance);
       }}
-      className={`sl-py-2 rounded-sm py-1 xl:px-1 ${
+      className={`sl-py-2 rounded-sm  flex flex-col gap-3 py-1 xl:px-1 ${
         isOver ? "bg-blue-100 dark:bg-neutral-950" : ""
       }`}
     >
-      <div className="mb-3 flex w-full">
+      {/*  top heading section  */}
+
+      <div className=" flex  ">
         <div
           className={`w-2 !bg-[${statusColor[status]}] rounded-s-lg`}
           style={{ backgroundColor: statusColor[status] }}
         />
-        <div className="flex w-full items-center justify-between rounded-e-lg bg-white px-5 py-4 dark:bg-dark-secondary">
-          <h3 className="flex items-center text-lg font-semibold dark:text-white">
+        <div className="flex w-full items-center justify-between  p-2 h-12     bg-bgsecondary shadow-md rounded-lg dark:bg-dark-secondary ">
+          <h3 className="flex items-center text-md text-maintext font-semibold dark:text-white">
             {status}{" "}
-            <span
-              className="ml-2 inline-block rounded-full bg-gray-200 p-1 text-center text-sm leading-none dark:bg-dark-tertiary"
-              style={{ width: "1.3rem", height: "1.3rem " }}
-            >
+            <span className=" ml-2   flex items-center justify-center rounded-full  bg-mainbtn text-white   h-6  w-6 text-center text-sm leading-none dark:bg-dark-tertiary">
               {tasksCount}
             </span>
           </h3>
@@ -427,257 +429,222 @@ const TaskColumn = ({
                   {isTaskOrSubTask === "Task" ? (
                     <>
                       <DialogTrigger asChild>
-                        <button className="flex items-center rounded-md bg-blue-600 px-2 py-1.5 text-white hover:bg-blue-500">
-                          <PlusSquare className="h-4 w-4 mr-1.5" />
+                        <Button className="commonbtn">
+                          <PlusSquare size={20} />
                           Create Task
-                        </button>
+                        </Button>
                       </DialogTrigger>
                     </>
                   ) : (
                     ""
                   )}
-                  <DialogContent className="sm:max-w-[50vw] lg:max-w-[60vw] max-h-[38vw]">
-                    <DialogHeader>
-                      <DialogTitle className="font-semibold text-lg">
-                        Create Task
-                      </DialogTitle>
+                  <DialogContent className="max-w-4xl ">
+                    <DialogHeader className="space-y-0">
+                      <DialogTitle className="text-maintext hidden"></DialogTitle>
                     </DialogHeader>
-                    <Tabs
-                      defaultValue="alerts"
-                      className="w-full  overflow-auto"
-                    >
-                      <TabsList className="grid  grid-cols-2 w-[400px] h-[46px]  overflow-auto">
-                        <TabsTrigger
-                          value="Manual"
-                          className="font-semibold text-lg"
-                        >
+                    <Tabs defaultValue="alerts" className="w-full ">
+                      <TabsList className="flex items-center justify-start gap-3 ">
+                        <TabsTrigger value="Manual" className="">
                           Create Manually
                         </TabsTrigger>
-                        <TabsTrigger
-                          value="Upload"
-                          className="font-semibold text-lg "
-                        >
-                          Upload Excel
-                        </TabsTrigger>
+                        <TabsTrigger value="Upload">Upload Excel</TabsTrigger>
                       </TabsList>
-                      <div className="mt-2 mb-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
+                      <div className=" m-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
 
-                      <TabsContent
-                        value="Manual"
-                        className="w-full  overflow-auto"
-                      >
-                        <div
-                          className="relative w-full h-full overflow-auto"
-                          style={{
-                            paddingTop: "42.575%",
-                          }}
-                        >
-                          <div className="absolute top-0 left-0 w-[calc(100%)] h-[calc(100%)]">
-                            <form onSubmit={handleSubmit}>
-                              <div className="grid gap-4 py-1">
-                                <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                                  <Label className="text-center">
-                                    Task Name
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Input
-                                    value={taskName}
-                                    onChange={handleChange}
-                                    className="col-span-7"
-                                    required
-                                  />
-                                  <Label className="text-center">
-                                    Description
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <textarea
-                                    value={taskDescription}
-                                    onChange={(e) =>
-                                      setTaskDescription(e.target.value)
-                                    }
-                                    className="col-span-7 shadow border"
-                                  />
+                      <TabsContent value="Manual" className="w-full  ">
+                        <form onSubmit={handleSubmit}>
+                          <div className="grid grid-cols-2 gap-3 ">
+                            <div className="space-y-1">
+                              <Label className="text-center">
+                                Task Name
+                                <span className="text-red-500 ml-1">*</span>
+                              </Label>
+                              <Input
+                                value={taskName}
+                                onChange={handleChange}
+                                required
+                                placeholder="Enter Your task"
+                              />
+                            </div>
 
-                                  <Label className="text-center">
-                                    Priority
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Select
-                                    value={taskPriority}
-                                    onValueChange={(value) =>
-                                      setTaskPriority(value)
-                                    }
-                                  >
-                                    <SelectTrigger className="col-span-3 p-2 border rounded-md">
-                                      <SelectValue placeholder="Select a priority" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectGroup>
-                                        <SelectLabel>Priority</SelectLabel>
-                                        <SelectItem value="Urgent">
-                                          Urgent
-                                        </SelectItem>
-                                        <SelectItem value="High">
-                                          High
-                                        </SelectItem>
-                                        <SelectItem value="Medium">
-                                          Medium
-                                        </SelectItem>
-                                        <SelectItem value="Low">Low</SelectItem>
-                                        <SelectItem value="Backlog">
-                                          Backlog
-                                        </SelectItem>
-                                      </SelectGroup>
-                                    </SelectContent>
-                                  </Select>
-                                  <Label className="text-center">
-                                    Estimated Hours
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Input
-                                    placeholder="Please enter a number"
-                                    value={taskPoints}
-                                    onChange={(e) =>
-                                      setTaskPoints(e.target.value)
-                                    }
-                                    className="col-span-3"
-                                  />
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Priority
+                              </Label>
+                              <Select
+                                value={taskPriority}
+                                onValueChange={(value) =>
+                                  setTaskPriority(value)
+                                }
+                              >
+                                <SelectTrigger className="text-secondarytext">
+                                  <SelectValue placeholder="Select a priority" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Priority</SelectLabel>
+                                    <SelectItem value="Urgent">
+                                      Urgent
+                                    </SelectItem>
+                                    <SelectItem value="High">High</SelectItem>
+                                    <SelectItem value="Medium">
+                                      Medium
+                                    </SelectItem>
+                                    <SelectItem value="Low">Low</SelectItem>
+                                    <SelectItem value="Backlog">
+                                      Backlog
+                                    </SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
 
-                                  <Label className="text-center">
-                                    Start Date
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Input
-                                    type="date"
-                                    value={startDate}
-                                    onChange={(e) =>
-                                      setStartDate(e.target.value)
-                                    }
-                                    className="col-span-3"
-                                  />
-                                  <Label className="text-center">
-                                    Due Date
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Input
-                                    type="date"
-                                    value={dueDate}
-                                    onChange={(e) => setDueDate(e.target.value)}
-                                    className="col-span-3"
-                                  />
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Estimated Hours
+                              </Label>
+                              <Input
+                                placeholder="Please enter a number"
+                                value={taskPoints}
+                                onChange={(e) => setTaskPoints(e.target.value)}
+                              />
+                            </div>
 
-                                  <Label className="text-center">Tags</Label>
-                                  <Input
-                                    placeholder="Please enter comma separated values"
-                                    value={taskTags}
-                                    onChange={(e) =>
-                                      setTaskTags(e.target.value)
-                                    }
-                                    className="col-span-3"
-                                  />
-                                  <Label className="text-center">
-                                    Assignee
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Select
-                                    value={assignedUserId}
-                                    onValueChange={(value) =>
-                                      setAssignedUserId(value)
-                                    }
-                                  >
-                                    <SelectTrigger className="col-span-3 p-2 border rounded-md">
-                                      <SelectValue placeholder="Select assignee" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectGroup>
-                                        <SelectLabel>
-                                          Assignee
-                                          <span className="text-red-500 ml-1">
-                                            *
-                                          </span>
-                                        </SelectLabel>
-                                        {data?.map((user) => (
-                                          <SelectItem
-                                            key={user.username}
-                                            value={String(user.userId)!}
-                                          >
-                                            {user.username}
-                                          </SelectItem>
-                                        ))}
-                                      </SelectGroup>
-                                    </SelectContent>
-                                  </Select>
-                                  <Label className="text-center">
-                                    Sprint
-                                    <span className="text-red-500 ml-1">*</span>
-                                  </Label>
-                                  <Select
-                                    value={sprintId}
-                                    onValueChange={(value) =>
-                                      setSprintId(value)
-                                    }
-                                  >
-                                    <SelectTrigger className="col-span-3 p-2 border rounded-md">
-                                      <SelectValue placeholder="Select sprint" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectGroup>
-                                        {sprintData?.map((sprint) => (
-                                          <SelectItem
-                                            key={sprint.title}
-                                            value={String(sprint.id)!}
-                                          >
-                                            {sprint.title}
-                                          </SelectItem>
-                                        ))}
-                                      </SelectGroup>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              <DialogFooter>
-                                <button
-                                  type="submit"
-                                  className={`flex w-200px mt-4 justify-centerrounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                                hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                                  !isFormValid() || isLoadingCreateTask
-                                    ? "cursor-not-allowed opacity-50"
-                                    : ""
-                                }`}
-                                  disabled={
-                                    !isFormValid() || isLoadingCreateTask
-                                  }
-                                >
-                                  {isLoadingCreateTask
-                                    ? "Creating..."
-                                    : "Create Task"}
-                                </button>
-                              </DialogFooter>
-                            </form>
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Start Date
+                              </Label>
+                              <Input
+                                type="date"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                              />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Due Date
+                              </Label>
+                              <Input
+                                type="date"
+                                value={dueDate}
+                                onChange={(e) => setDueDate(e.target.value)}
+                              />
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Assignee
+                              </Label>
+                              <Select
+                                value={assignedUserId}
+                                onValueChange={(value) =>
+                                  setAssignedUserId(value)
+                                }
+                              >
+                                <SelectTrigger className="text-secondarytext">
+                                  <SelectValue placeholder="Select assignee" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>
+                                      Assignee
+                                      <span className="text-red-500 ml-1">
+                                        *
+                                      </span>
+                                    </SelectLabel>
+                                    {data?.map((user) => (
+                                      <SelectItem
+                                        key={user.username}
+                                        value={String(user.userId)!}
+                                      >
+                                        {user.username}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div className="space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Sprint
+                              </Label>
+                              <Select
+                                value={sprintId}
+                                onValueChange={(value) => setSprintId(value)}
+                              >
+                                <SelectTrigger className="text-secondarytext">
+                                  <SelectValue placeholder="Select sprint" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    {sprintData?.map((sprint) => (
+                                      <SelectItem
+                                        key={sprint.title}
+                                        value={String(sprint.id)!}
+                                      >
+                                        {sprint.title}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="col-span-4 space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Tags
+                              </Label>
+                              <Input
+                                placeholder="Please enter comma separated values"
+                                value={taskTags}
+                                onChange={(e) => setTaskTags(e.target.value)}
+                              />
+                            </div>
+
+                            <div className="col-span-4 space-y-1">
+                              <Label className=" after:content-['*'] after:text-red-500 after:ml-1">
+                                Description
+                              </Label>
+                              <Textarea
+                                value={taskDescription}
+                                onChange={(e) =>
+                                  setTaskDescription(e.target.value)
+                                }
+                                placeholder="Enter description"
+                              />
+                            </div>
                           </div>
-                        </div>
+
+                          <div className="flex items-center justify-end p-2  m-2">
+                            <Button
+                              type="submit"
+                              className={`commonbtn  ${
+                                !isFormValid() || isLoadingCreateTask
+                                  ? "cursor-not-allowed opacity-50"
+                                  : ""
+                              }`}
+                              disabled={!isFormValid() || isLoadingCreateTask}
+                            >
+                              {isLoadingCreateTask
+                                ? "Creating..."
+                                : "Create Task"}
+                            </Button>
+                          </div>
+                        </form>
                       </TabsContent>
                       <TabsContent value="Upload" className=" overflow-auto">
-                        <Card>
-                          <CardHeader>
-                            <CardDescription>Bulk Create Tasks</CardDescription>
-                          </CardHeader>
-                          <CardContent className="space-y-2">
-                            <BulkCreate
-                              sprintList={sprintData!}
-                              email={email}
-                              projectId={Number(projectId)}
-                              setIsOpen={setIsOpen}
-                            />
-                          </CardContent>
-                        </Card>
+                        <div className="text-end text-secondarytext text-sm">
+                          Create a task In Bulk
+                        </div>
+                        <BulkCreate
+                          sprintList={sprintData!}
+                          email={email}
+                          projectId={Number(projectId)}
+                          setIsOpen={setIsOpen}
+                        />
                       </TabsContent>
                     </Tabs>
-
-                    <DialogFooter className="w-full justify-between items-center">
-                      <div className="absolute flex gap-4 left-10"></div>
-                      <div className="flex items-center space-x-2"></div>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </>
@@ -687,17 +654,22 @@ const TaskColumn = ({
           </div>
         </div>
       </div>
-      {tasks
-        .filter((task) => task.status === status)
-        .map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            email={email}
-            projectId={id}
-            isTaskOrSubTask={isTaskOrSubTask}
-          />
-        ))}
+
+      {/*  main task section  */}
+
+      <div className="space-y-5 ">
+        {tasks
+          .filter((task) => task.status === status)
+          .map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+              email={email}
+              projectId={id}
+              isTaskOrSubTask={isTaskOrSubTask}
+            />
+          ))}
+      </div>
     </div>
   );
 };
@@ -857,19 +829,19 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
 
   return (
     <Dialog>
-      <div
+      <Card
         ref={(instance) => {
           drag(instance);
         }}
-        className={`mb-4 rounded-md bg-white shadow dark:bg-dark-secondary ${
+        className={`  border-1 border-[#e8ecef] hover:bg-[#ebf2ff] dark:bg-dark-secondary ${
           isDragging ? "opacity-60" : "opacity-100"
         }`}
       >
-        <div className="p-4 md:p-6">
+        <div className="p-2">
           {isTaskOrSubTask === "Task" ? (
             <>
-              <div className="flex items-start justify-between">
-                <div className="flex flex-1 flex-wrap items-center gap-2">
+              <div className="flex items-center justify-between p-1  ">
+                <div className="flex flex-1  flex-wrap items-center gap-2">
                   {task.priority && <PriorityTag priority={task.priority} />}
                   <div
                     className="flex flex-1 flex-wrap items-center gap-2"
@@ -898,11 +870,12 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                   </div>
                 </div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
-                    <EllipsisVertical size={26} />
+                  <DropdownMenuTrigger className="text-iconcolor  focus:outline-none focus:border-none hover:text-mainbtn">
+                    <EllipsisVertical size={18} />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         assignTask(task.id, email);
                       }}
@@ -911,8 +884,11 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
 
-                    <DropdownMenuLabel>Move Task To :</DropdownMenuLabel>
+                    <DropdownMenuLabel className="text-maintext">
+                      Move Task To :
+                    </DropdownMenuLabel>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task.id, "To Do");
                       }}
@@ -920,6 +896,7 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                       To Do
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task.id, "Work In Progress");
                       }}
@@ -927,6 +904,7 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                       Work In Progress
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task.id, "Under Review");
                       }}
@@ -934,6 +912,7 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                       Under Review
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task.id, "Completed");
                       }}
@@ -942,6 +921,7 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         closeTask(task.id);
                       }}
@@ -959,18 +939,19 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
             <div className="my-3 flex justify-between">
               <DialogTrigger asChild>
                 <button>
-                  <h4 className="mext-md font-bold text-blue-900 dark:text-white underline">
+                  <h4 className="text-md font-bold text-blue-900 dark:text-white underline">
                     {task.title}
                   </h4>
                 </button>
               </DialogTrigger>
               {typeof task.points === "number" && (
-                <div className="text-xs font-semibold dark:text-white">
+                <div className="text-xs font-semibold text-secondarytext dark:text-white">
                   {task.points} hrs
                 </div>
               )}
             </div>
-            <DialogContent className="max-w-[85vw] mt-5 mb-5 overflow-y-auto">
+            <DialogContent className="max-w-[85vw]">
+              <DialogTitle className="hidden"></DialogTitle>
               {isTaskOrSubTask === "Task" ? (
                 <TaskPage
                   taskId={task.id}
@@ -986,18 +967,18 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
               )}
             </DialogContent>
           </Dialog>
-          <div className="text-xs text-gray-500 dark:text-white">
+          <div className="text-xs text-maintext dark:text-white">
             {formattedStartDate && <span>{formattedStartDate} - </span>}
             {formattedDueDate && <span>{formattedDueDate}</span>}
           </div>
-          <p className="text-sm text-gray-600 line-clamp-5 dark:text-white">
+          <p className="text-sm mt-2 text-secondarytext line-clamp-5 dark:text-white">
             {task.description}
           </p>
 
-          <div className="mt-4 border-t border-gray-200 dark:border-stroke-dark" />
+          <div className=" mt-2 border-t border-gray-200 dark:border-stroke-dark" />
           {/* Users */}
           <div className="mt-3 flex items-center justify-between">
-            <div className="flex space-x-[6px] overflow-hidden">
+            <div className="flex space-x-[6px] items-center  overflow-hidden">
               {task.assignee && (
                 <Avatar className="h-8 w-8 rounded-full border-white object-cover dark:border-dark-secondary">
                   {/* {task.assignee?.profilePicture?.base64 ? (
@@ -1016,71 +997,77 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                 </Avatar>
               )}
               {task.assignee && (
-                <Label className="text-center mt-3 ml-1">
+                <Label className="text-center text-maintext font-semibold ml-1">
                   {task.assignee.username}
                 </Label>
               )}
             </div>
-            <div className="flex items-center text-gray-500 dark:text-neutral-500">
+            <div className="flex items-center text-secondarytext dark:text-neutral-500">
               <div className="pr-3 mt-2">
                 {" "}
                 <Dialog>
                   <DialogTrigger asChild>
                     {isTaskOrSubTask === "Task" ? (
-                      <button>
-                        <History size={20} className="dark:text-white" />
+                      <button className="hover:text-mainbtn  text-iconcolor">
+                        <History size={20} className="dark:text-white  " />
                       </button>
                     ) : (
                       ""
                     )}
                   </DialogTrigger>
-                  <DialogContent className="max-w-[80vw] overflow-y-auto ">
-                    <DialogHeader>
-                      <DialogTitle>Task History</DialogTitle>
-                      <DialogDescription className="ml-7">
-                        {" "}
-                        Current Status:
-                        <span
-                          className="inline-flex rounded-full px-2 text-xs ml-1 font-semibold leading-5"
-                          style={{
-                            backgroundColor:
-                              task.status === "To Do"
-                                ? "#2563EB"
-                                : task.status === "Work In Progress"
-                                ? "#059669"
-                                : task.status === "UnderReview"
-                                ? "#D97706"
-                                : task.status === "Completed"
-                                ? "#000000"
-                                : "#E5E7EB",
-                            color:
-                              task.status === "To Do" ||
-                              task.status === "Work In Progress" ||
-                              task.status === "UnderReview" ||
-                              task.status === "Completed"
-                                ? "#ffffff"
-                                : "#000000",
-                          }}
-                        >
-                          {task.status}
-                        </span>
-                      </DialogDescription>
-                      <DialogDescription className="ml-7">
-                        {" "}
-                        Task Duration: {formatDate(task.startDate || "")} -{" "}
-                        {formatDate(task.dueDate || "")}
-                      </DialogDescription>
-                      <DialogDescription className="ml-7">
-                        {" "}
-                        Estimated Hours: {task.points || ""}
-                      </DialogDescription>
+                  <DialogContent className="max-w-4xl ">
+                    <DialogHeader className="">
+                      <DialogTitle className="text-maintext">
+                        Task History
+                      </DialogTitle>
+
+                      <div className="flex flex-col gap-2">
+                        <DialogDescription className="">
+                          {" "}
+                          Current Status:
+                          <span
+                            className="inline-flex rounded-full px-2 text-xs ml-1 font-semibold leading-5"
+                            style={{
+                              backgroundColor:
+                                task.status === "To Do"
+                                  ? "#2563EB"
+                                  : task.status === "Work In Progress"
+                                  ? "#059669"
+                                  : task.status === "UnderReview"
+                                  ? "#D97706"
+                                  : task.status === "Completed"
+                                  ? "#000000"
+                                  : "#E5E7EB",
+                              color:
+                                task.status === "To Do" ||
+                                task.status === "Work In Progress" ||
+                                task.status === "UnderReview" ||
+                                task.status === "Completed"
+                                  ? "#ffffff"
+                                  : "#000000",
+                            }}
+                          >
+                            {task.status}
+                          </span>
+                        </DialogDescription>
+                        <DialogDescription className="">
+                          {" "}
+                          Task Duration: {formatDate(
+                            task.startDate || ""
+                          )} - {formatDate(task.dueDate || "")}
+                        </DialogDescription>
+                        <DialogDescription className="">
+                          {" "}
+                          Estimated Hours: {task.points || ""}
+                        </DialogDescription>
+                      </div>
                     </DialogHeader>
                     <TaskHistory
                       taskId={task.id}
                       estimatedHours={String(task.points)}
                       fullPageFlag={false}
                     />
-                    <DialogFooter className="text-gray-600">
+                    <DialogFooter className="text-secondarytext">
                       All numbers are in hours except total time
                     </DialogFooter>
                   </DialogContent>
@@ -1089,12 +1076,17 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
               <Dialog>
                 <DialogTrigger asChild>
                   <button>
-                    <MessageSquareMore size={20} className="dark:text-white" />
+                    <MessageSquareMore
+                      size={20}
+                      className="hover:text-mainbtn text-iconcolor"
+                    />
                   </button>
                 </DialogTrigger>
-                <DialogContent className="max-w-[40vw] overflow-y-auto max-h-[85vh]">
+                <DialogContent className="max-w-xl">
                   <DialogHeader>
-                    <DialogTitle>Comments </DialogTitle>
+                    <DialogTitle className="text-maintext">
+                      Comments{" "}
+                    </DialogTitle>
                   </DialogHeader>
                   {isTaskOrSubTask === "Task" ? (
                     <Comments
@@ -1107,13 +1099,13 @@ const Task = ({ task, email, projectId, isTaskOrSubTask }: TaskProps) => {
                   )}
                 </DialogContent>
               </Dialog>
-              <span className="ml-1 text-sm dark:text-white">
+              <span className="ml-1 text-secondarytext text-sm dark:text-white">
                 {numberOfComments}
               </span>
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </Dialog>
   );
 };

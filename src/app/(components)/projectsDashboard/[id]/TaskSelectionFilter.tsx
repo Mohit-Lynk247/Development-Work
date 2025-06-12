@@ -48,7 +48,7 @@ export function TaskSelectionFilter({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-between"
+          className="w-[150px] text-secondarytext justify-between"
         >
           {assignedTo
             ? frameworks.find((framework) => framework.value === assignedTo)

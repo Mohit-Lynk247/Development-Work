@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { CloudUpload, Download } from "@mui/icons-material";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { SprintResponse, TaskFormData } from "@/store/interfaces";
 import { toast } from "react-hot-toast";
 import ExcelJS from "exceljs";
 import { useCreateBulkTasksMutation } from "@/store/api";
+import { Button } from "@/components/ui/button";
+import { ArrowDownToLine } from "lucide-react";
 
 type Props = {
   sprintList: SprintResponse[];
@@ -280,51 +282,38 @@ const BulkCreate = ({ sprintList, email, projectId, setIsOpen }: Props) => {
     <div className="flex h-full">
       {/* Left Half - File Drag and Drop */}
       <div className="w-1/2 flex flex-col items-center justify-center p-8 ">
-        <div className="w-full">
-          {/* File input */}
-
-          {/* Drag-and-drop area */}
-          <div
-            className={`w-full h-64 border-dashed border-4 border-gray-300 rounded-xl flex flex-col items-center justify-center transition-all duration-300 ${
-              isOver ? "bg-gray-200 scale-105 shadow-lg" : "bg-white"
-            }`}
-            onDrop={handleFileDrop}
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            style={{
-              position: "relative",
-              zIndex: 1500,
-            }}
-          >
-            <CloudUpload className="text-gray-600 text-4xl" />
-            <p className="text-gray-600 mt-4 text-lg">
-              Drag & Drop a file here
-            </p>
-          </div>
-          {file && <div>Selected file: {file.name}</div>}
+        {/* Drag-and-drop area */}
+        <div
+          className={`w-full h-64 border-dashed border-3 border-gray-300 rounded-xl flex flex-col items-center justify-center transition-all duration-300 ${
+            isOver ? "bg-bgprimary scale-105 shadow-lg" : "bg-bgprimary"
+          }`}
+          onDrop={handleFileDrop}
+          onDragOver={(e) => e.preventDefault()}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          style={{
+            position: "relative",
+            zIndex: 1500,
+          }}
+        >
+          <CloudUpload className="text-secondarytext text-[10rem]" />
+          <p className="text-secondarytext mt-1 text-md">
+            Drag & Drop a file here
+          </p>
         </div>
+        {file && <div>Selected file: {file.name}</div>}
       </div>
 
       {/* Right Half - Buttons Section */}
       <div className="w-1/2 flex flex-col items-center justify-center p-8">
-        <Box className="flex flex-col items-center justify-center space-y-6 w-full">
+        <Box className="flex flex-col items-center justify-center  gap-4 w-full">
           {/* Download Format Button */}
           <Button
-            variant="contained"
             color="primary"
-            startIcon={<Download />}
             onClick={handleDownload}
-            className="w-64 py-3 text-lg font-medium rounded-xl shadow-lg hover:bg-blue-600 transition duration-300"
-            //disabled={!file} // Disable if no file is selected
-            sx={{
-              textTransform: "none", // Remove the uppercase text transform
-              boxShadow: 3, // Adds a subtle shadow effect
-              "&:hover": {
-                boxShadow: 6, // Hover effect shadow
-              },
-            }}
+            className="commonbtn w-full"
           >
+            <ArrowDownToLine />
             Download Format
           </Button>
 
@@ -336,23 +325,13 @@ const BulkCreate = ({ sprintList, email, projectId, setIsOpen }: Props) => {
             onChange={handleFileSelect}
             accept=".xlsx, .xls"
           />
-          <label htmlFor="fileInput">
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => document.getElementById("fileInput")?.click()}
-              className="w-64 py-3 text-lg font-medium rounded-xl shadow-lg hover:bg-gray-100 transition duration-300"
-              sx={{
-                textTransform: "none",
-                boxShadow: 3,
-                "&:hover": {
-                  boxShadow: 6,
-                },
-              }}
-            >
-              Choose File
-            </Button>
-          </label>
+
+          <Button
+            className="w-full bg-bgprimary text-secondarytext hover:bg-blue-100 font-medium hover:text-black "
+            onClick={() => document.getElementById("fileInput")?.click()}
+          >
+            Choose File
+          </Button>
         </Box>
       </div>
     </div>

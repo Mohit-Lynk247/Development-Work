@@ -55,7 +55,7 @@ export function HeaderFilter({ priority, setPriority }: Props) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[150px] justify-between"
+          className="w-[150px] text-secondarytext justify-between"
         >
           {priority
             ? frameworks.find((framework) => framework.value === priority)

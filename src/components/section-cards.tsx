@@ -46,7 +46,7 @@ export function SectionCards({ email, fromDate, toDate, teamId }: Props) {
 
   return (
     <div className="grid grid-cols-4  gap-5  p-2 px-2">
-      <Card className="@container/card  gap-2    ">
+      <Card className="@container/card  hover:bg-[#ebf2ff]  gap-2 py-1   ">
         <CardHeader className="relative px-2  py-3 ">
           <div className="flex items-start justify-between ">
             <CardDescription className="text-maintext text-sm  font-semibold gap-2 flex items-center">
@@ -88,7 +88,7 @@ export function SectionCards({ email, fromDate, toDate, teamId }: Props) {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card  gap-2   ">
+      <Card className="@container/card  gap-2  hover:bg-[#ebf2ff]   ">
         <CardHeader className="relative px-2  py-3 ">
           <div className="flex items-start justify-between ">
             <CardDescription className="text-maintext text-sm   font-semibold gap-2 flex items-center">
@@ -130,7 +130,7 @@ export function SectionCards({ email, fromDate, toDate, teamId }: Props) {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card  gap-2   ">
+      <Card className="@container/card  gap-2 hover:bg-[#ebf2ff]    ">
         <CardHeader className="relative px-2  py-3 ">
           <div className="flex items-start justify-between ">
             <CardDescription className="text-maintext  text-sm  font-semibold gap-2 flex items-center">
@@ -172,7 +172,7 @@ export function SectionCards({ email, fromDate, toDate, teamId }: Props) {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card  gap-2   ">
+      <Card className="@container/card  gap-2  hover:bg-[#ebf2ff]   ">
         <CardHeader className="relative px-2  py-3 ">
           <div className="flex items-start justify-between ">
             <CardDescription className="text-maintext  text-sm  font-semibold gap-2 flex items-center">

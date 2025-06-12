@@ -53,7 +53,7 @@ export function SubTaskFilter({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[130px] justify-between"
+          className="w-[130px] text-secondarytext justify-between"
         >
           {isTaskOrSubTask
             ? frameworks.find(

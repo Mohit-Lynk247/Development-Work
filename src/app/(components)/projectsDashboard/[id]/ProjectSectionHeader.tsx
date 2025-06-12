@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { ChevronLeft, PlusSquare } from "lucide-react";
 import { useCreateSprintMutation } from "@/store/api";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
   name: string;
@@ -92,75 +93,75 @@ const ProjectSectionHeader = ({
               {buttonName}
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[45vw] lg:max-w-[45vw] max-h-[29vw] overflow-auto">
+          <DialogContent className="max-w-3xl overflow-auto">
             <DialogHeader>
-              <DialogTitle className="mb-2">Create Sprint</DialogTitle>
+              <DialogTitle className="">Create Sprint</DialogTitle>
             </DialogHeader>
 
-            <div
-              className="relative w-full h-full overflow-auto"
-              style={{
-                paddingTop: "38.575%",
-              }}
-            >
-              <div className="absolute top-0 left-0 w-[calc(100%)] h-full">
-                <form onSubmit={handleSubmit}>
-                  <div className="grid gap-4 py-3">
-                    <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                      <Label className="text-center">
-                        Sprint Title<span className="text-red-500 ml-1">*</span>
-                      </Label>
-                      <Input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="col-span-7"
-                        required
-                      />
-                      <Label className="text-center">
-                        Description<span className="text-red-500 ml-1">*</span>
-                      </Label>
-                      <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="col-span-7 shadow border"
-                      />
-                      <Label className="text-center">
-                        Start Date<span className="text-red-500 ml-1">*</span>
-                      </Label>
-                      <Input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        className="col-span-3"
-                      />
-                      <Label className="text-center">
-                        End Date<span className="text-red-500 ml-1">*</span>
-                      </Label>
-                      <Input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        className="col-span-3"
-                      />
-                    </div>
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-3">
+                <div className="space-y-1">
+                  <Label className="text-center  after:pl-1 after:content-['*'] after:text-red-500">
+                    Sprint Title
+                  </Label>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    placeholder="Enter your title"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-center  after:pl-1 after:content-['*'] after:text-red-500">
+                    Description
+                  </Label>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Enter your description"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <Label className="text-center  after:pl-1 after:content-['*'] after:text-red-500">
+                      Start Date
+                    </Label>
+                    <Input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
                   </div>
-                  <DialogFooter>
-                    <button
-                      type="submit"
-                      className={`flex w-200px mt-7 justify-center rounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                                hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                                  !isFormValid() || isLoadingCreateSprint
-                                    ? "cursor-not-allowed opacity-50"
-                                    : ""
-                                }`}
-                      disabled={!isFormValid() || isLoadingCreateSprint}
-                    >
-                      {isLoadingCreateSprint ? "Creating..." : "Create Sprint"}
-                    </button>
-                  </DialogFooter>
-                </form>
+                  <div className="space-y-1">
+                    <Label className="text-center  after:pl-1 after:content-['*'] after:text-red-500">
+                      End Date
+                    </Label>
+                    <Input
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+
+              <DialogFooter className="mt-4">
+                <Button
+                  type="submit"
+                  className={` commonbtn ${
+                    !isFormValid() || isLoadingCreateSprint
+                      ? "cursor-not-allowed opacity-50"
+                      : ""
+                  }`}
+                  disabled={!isFormValid() || isLoadingCreateSprint}
+                >
+                  {isLoadingCreateSprint ? "Creating..." : "Create Sprint"}
+                </Button>
+              </DialogFooter>
+            </form>
+
             <DialogFooter className="w-full justify-between items-center">
               <div className="absolute flex gap-4 left-10"></div>
               <div className="flex items-center space-x-2"></div>

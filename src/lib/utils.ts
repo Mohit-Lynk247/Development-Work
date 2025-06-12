@@ -14,15 +14,14 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     "& .MuiDataGrid-root": {
       backgroundColor: `${isDarkMode ? "#121212" : "#e9ecef"}`, // Set grid background color
       border: "none", // Remove grid border completely
-      
     },
     // Target column headers
     "& .MuiDataGrid-columnHeaders": {
       color: `${isDarkMode ? "#e5e7eb" : "#0F172A"}`, // Column header text color
       '& [role="row"] > *': {
         fontWeight: "999",
-        backgroundColor: `${isDarkMode ? "#1d1f21" : "#E2E8F0"}`, // Header background
-        border: "none", // Remove border from column headers,
+        backgroundColor: `${isDarkMode ? "#1d1f21" : "#ffffff"}`, // Header background
+        // border: "none", // Remove border from column headers,
       },
     },
     // Icon buttons and pagination
@@ -52,7 +51,7 @@ export const dataGridSxStyles = (isDarkMode: boolean) => {
     },
     "& .MuiDataGrid-row:hover": {
       // if() {},
-      backgroundColor: `${isDarkMode ? "#1d1f21" : "#E2E8F0"}`, // Row background color
+      backgroundColor: `${isDarkMode ? "#1d1f21" : "#e9f5ff"}`, // Row background color
     },
     // Cells with specific borders (remove any borders in these cells as well)
     "& .MuiDataGrid-withBorderColor": {

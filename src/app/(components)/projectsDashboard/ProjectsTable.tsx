@@ -143,18 +143,19 @@ const ProjectsTable = ({ email, closedProjectFlag }: Props) => {
   ];
 
   return (
-    <Card className="h-full w-full bg-bgsecondary  ">
-      <Header name="Table" isSmallText />
+    <>
+      
+      {/* <Header name="Table" isSmallText /> */}
 
-      <CardContent>
-        <DataGrid
-          rows={data || []}
-          columns={columns}
-          className={dataGridClassNames}
-          sx={dataGridSxStyles(isDarkMode)}
-        />
-      </CardContent>
-    </Card>
+   
+      <DataGrid
+        rows={data || []}
+        columns={columns}
+        className={dataGridClassNames}
+        sx={dataGridSxStyles(isDarkMode)}
+      />
+    
+    </>
   );
 };
 

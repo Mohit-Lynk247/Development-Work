@@ -9,7 +9,7 @@ import {
 import { Eye } from "lucide-react";
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   text: String;
 };
 const ViewButton = ({ text, onClick }: Props) => {

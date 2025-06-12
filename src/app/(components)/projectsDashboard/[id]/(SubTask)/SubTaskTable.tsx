@@ -2,10 +2,18 @@ import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { SubTask } from "@/store/interfaces";
 import SubTaskPage from "./SubTaskPage";
 import { useTheme } from "next-themes";
+import ViewButton from "@/components/customButton/viewButton";
 
 type Props = {
   subTasks: SubTask[];
@@ -116,15 +124,13 @@ const SubTaskTable = ({ subTasks, email, projectId }: Props) => {
             <Dialog>
               <div className="my-3 flex justify-between">
                 <DialogTrigger asChild>
-                  <Button
-                    variant="contained"
-                    className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
-                  >
-                    View
-                  </Button>
+                  <ViewButton text={"View Details"} />
                 </DialogTrigger>
               </div>
-              <DialogContent className="max-w-[85vw] mt-5 mb-5 overflow-y-auto">
+              <DialogContent className="max-w-[85vw] ">
+                <DialogHeader>
+                  <DialogTitle className="hidden">Edit profile</DialogTitle>
+                </DialogHeader>
                 <SubTaskPage
                   subTaskId={params.value}
                   email={email}
@@ -143,14 +149,14 @@ const SubTaskTable = ({ subTasks, email, projectId }: Props) => {
   let isDarkMode = theme === "dark";
 
   return (
-    <div className="h-540px e-full px-4 pb-8 xl:px-6">
-      <DataGrid
-        rows={subTasks || []}
-        columns={columns}
-        className={dataGridClassNames}
-        sx={dataGridSxStyles(isDarkMode)}
-      />
-    </div>
+    // <div className="h-540px w-full ">
+    <DataGrid
+      rows={subTasks || []}
+      columns={columns}
+      className={dataGridClassNames}
+      sx={dataGridSxStyles(isDarkMode)}
+    />
+    // </div>
   );
 };
 

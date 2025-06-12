@@ -51,10 +51,10 @@ const NavbarComponent = () => {
     <div className="relative flex items-center ">
       {/* Search icon */}
 
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full  rounded-sm">
         <Search
           size={20}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-white"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-iconcolor dark:text-white"
           aria-label="Search"
         />
         {/* Search input */}

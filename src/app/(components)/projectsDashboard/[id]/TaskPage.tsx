@@ -6,6 +6,7 @@ import {
   Maximize2,
   Clock,
   Timer,
+  Trash2,
 } from "lucide-react";
 import { SubTask, Task as TaskType } from "@/store/interfaces";
 import {
@@ -41,7 +42,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -56,6 +57,9 @@ import Link from "next/link";
 import CircularLoading from "@/components/Sidebar/loading";
 import ErrorDialog from "@/app/ErrorDialog";
 import { useSearchParams } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
   taskId: number;
@@ -639,7 +643,7 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
     );
 
   return (
-    <div className="w-[80vw] max-h-[90vh] overflow-y-auto mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6 dark:bg-gray-800 dark:text-white">
+    <div className="w-[80vw] max-h-[80vh] overflow-y-auto mx-auto   px-1   dark:bg-gray-800 dark:text-white">
       {/* Task Title and Description */}
       {isDialogOpen && (
         <ErrorDialog
@@ -653,22 +657,19 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
       )}
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-2xl font-semibold text-maintext">
             {task?.title} - {task?.code}
           </h1>
-          <div className="flex space-x-4 ml-auto">
+          <div className="flex space-x-4 p-2">
             {task?.status! === "Closed" ? (
               ""
             ) : (
               <>
                 {isTaskAssigned ? (
                   <>
-                    <button
-                      onClick={toggleProgress}
-                      className="px-4 py-2 text-white rounded-lg bg-black hover:bg-gray-300 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 "
-                    >
+                    <Button onClick={toggleProgress} className="commonbtn">
                       {isProgressStarted ? "Pause Progress" : "Start Progress"}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   ""
@@ -678,30 +679,29 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
             <Link
               href={`/projectsDashboard/${projectId}/${task?.id}?email=${email}`}
             >
-              <button
-                className="px-4 py-2 text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-300 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              <Button
+                className="commonbtn  w-10"
                 onClick={() => {
                   sessionStorage.setItem("projectId", projectId);
                   sessionStorage.setItem("taskId", String(task?.id));
                 }}
               >
-                <Maximize2 />
-              </button>
+                <Maximize2 size={20} />
+              </Button>
             </Link>
           </div>
         </div>
 
-        <div className="space-y-4 text-gray-600 dark:text-gray-400">
-          <div className="text-sm flex justify-between items-center">
+        <div className="space-y-4 text-secondarytext dark:text-gray-400">
+          <div className="text-sm flex justify-between   items-center">
             <span>
               {formatDate(task?.startDate!)} - {formatDate(task?.dueDate!)}
             </span>
             <>
-              <span className="text-gray-600 text-lg inline-flex items-center mr-5">
-                <Timer className="mr-2 " />
-                <div className="text-center text-lg font-semibold">
-                  Consumed time: {timeDiff}
-                </div>
+              <span className="  text-secondarytext text-lg  font-semibold inline-flex items-start gap-1 ">
+                <Timer className=" text-iconcolor  " />
+                Consumed time
+                <div className="font-medium">: {timeDiff}</div>
               </span>
             </>
           </div>
@@ -709,14 +709,14 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
           <div className="text-sm relative">
             {/* Display editable content */}
             {isEditable ? (
-              <input
+              <Input
                 type="text"
                 value={editedText}
                 onChange={(e) => setEditedText(Number(e.target.value))} // Update state as user types
                 onBlur={handleBlur} // Trigger onBlur event when user clicks outside
                 onKeyDown={handleKeyDown} // Trigger onBlur when Enter key is pressed
-                autoFocus // Automatically focus the input when it's rendered
-                className="border p-1 rounded w-24" // Style the input
+                autoFocus // Automatically focus the Input when it's rendered
+                className="border p-1 rounded w-24" // Style the Input
               />
             ) : (
               <div className="flex items-center">
@@ -790,7 +790,7 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 ">
             <span className="text-sm font-semibold">Tags:</span>
 
             <div
@@ -804,7 +804,7 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
                   <div
                     key={tag}
                     ref={index === 0 ? tagRef : null} // Attach ref to the first tag for measuring width
-                    className="rounded-full bg-blue-100 px-2 py-1 text-xs"
+                    className="rounded-full bg-iconcolor/80 px-5 text-white  py-1 text-xs"
                   >
                     {tag}
                   </div>
@@ -829,7 +829,7 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
               onMouseEnter={() => setIsDescriptionHovered(false)}
               onMouseLeave={() => setIsDescriptionHovered(false)}
             >
-              <p className="text-gray-700 dark:text-gray-300 cursor-pointer">
+              <p className="text-secondarytext leading-6 dark:text-gray-300 cursor-pointer">
                 {description || "Loading description..."}
               </p>
 
@@ -863,11 +863,11 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
 
       {/* Attachments Section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Attachments</h2>
+        <h2 className="text-xl font-semibold text-maintext">Attachments</h2>
         <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg dark:border-gray-600">
           <div className="flex items-center justify-between">
-            <div className="flex space-x-4">
-              <div className="flex items-center space-x-2">
+            <div className="flex space-x-2 ">
+              <div className="flex items-center space-x-2 ">
                 {(task?.attachments?.length ?? 0) > 0 ? (
                   <>
                     <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
@@ -877,28 +877,32 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
                       {task?.attachments?.[0]?.fileName}
                     </span>
                     <button
-                      className="text-blue-600 hover:text-blue-800 ml-2"
+                      className=" text-iconcolor hover:text-blue-800 "
                       onClick={downloadAttachment}
                     >
-                      <Download />
+                      <Download size={20} />
                     </button>
                   </>
                 ) : (
-                  "Please upload a document of size less than 1 mb"
+                  <div className="text-sm text-red-500">
+                    Please upload a document of size less than 1 mb
+                  </div>
                 )}
               </div>
 
               {(task?.attachments?.length ?? 0) > 0 ? (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <button className="text-blue-600 hover:text-blue-800 ml-2">
-                      Delete
+                    <button className="text-iconcolor hover:text-blue-800 ">
+                      <Trash2 size={20} />
                     </button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                      <AlertDialogDescription className="text-gray-700">
+                      <AlertDialogTitle className="text-maintext">
+                        Are you sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-secondarytext">
                         Do you want to remove the Attachment ?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
@@ -907,10 +911,14 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
                         onClick={() => {
                           //setOpen(false);
                         }}
+                        className="w-20"
                       >
                         No
                       </AlertDialogCancel>
-                      <AlertDialogAction onClick={deleteAttachment}>
+                      <AlertDialogAction
+                        className="commonbtn w-20"
+                        onClick={deleteAttachment}
+                      >
                         Yes
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -921,9 +929,9 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
               )}
             </div>
           </div>
-          <div className="mt-4">
+          <div className=" mt-2 ">
             <div>
-              {/* Button to trigger file input */}
+              {/* Button to trigger file Input */}
               {isLoadingUploadAttachment && (
                 <Progress value={uploadProgress} max={100} color="blue" />
               )}
@@ -938,8 +946,8 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
                 </button>
               )}
 
-              {/* Hidden file input */}
-              <input
+              {/* Hidden file Input */}
+              <Input
                 id="fileInput"
                 type="file"
                 className="hidden"
@@ -951,131 +959,130 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
       </div>
 
       {/* Subtasks Section */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
+      <div className="space-y-4  mt-2">
+        <div className="flex justify-between items-center p-1  ">
           <h2 className="text-xl font-semibold">Subtasks</h2>
           <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <button className="flex items-center rounded-md bg-blue-600 px-3 py-2 text-white hover:bg-blue-500">
-                  <PlusSquare className="h-5 w-5 mr-2" />
+              <DialogTrigger className="commonbtn" asChild>
+                <Button>
+                  <PlusSquare className="h-5 w-5 " />
                   Add Subtasks
-                </button>
+                </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[50vw] lg:max-w-[60vw] max-h-[29vw] overflow-y-auto">
+              <DialogContent className=" max-w-[60vw]  flex flex-col gap-6 ">
                 <DialogHeader>
-                  <DialogTitle className="mb-1">Create SubTask</DialogTitle>
+                  <DialogTitle className=" text-maintext ">
+                    Create SubTask
+                  </DialogTitle>
                 </DialogHeader>
 
-                <div className="relative w-full h-full overflow-hidden">
-                  <div className=" top-0 left-0 w-[calc(100%)] h-[calc(100%)]">
-                    <form onSubmit={handleSubmit}>
-                      <div className="grid gap-4 py-1">
-                        <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                          <Label className="text-center">
-                            Task Name
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            value={subTaskName}
-                            onChange={handleChange}
-                            className="col-span-7"
-                            required
-                          />
-                          <Label className="text-center">
-                            Description
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <textarea
-                            value={subTaskDescription}
-                            onChange={(e) =>
-                              setSubTaskDescription(e.target.value)
-                            }
-                            className="col-span-7 shadow border"
-                          />
-                          <Label className="text-center">
-                            Start Date
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={subTaskStartDate}
-                            onChange={(e) =>
-                              setSubTaskStartDate(e.target.value)
-                            }
-                            className="col-span-3"
-                          />
-                          <Label className="text-center">
-                            Due Date<span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={subTaskDueDate}
-                            onChange={(e) => setSubTaskDueDate(e.target.value)}
-                            className="col-span-3"
-                          />
+                <form onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex  flex-col gap-2">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Task Name
+                      </Label>
+                      <Input
+                        value={subTaskName}
+                        onChange={handleChange}
+                        className="col-span-7"
+                        placeholder="Enter your Task "
+                        required
+                      />
+                    </div>
 
-                          <Label className="text-center">
-                            Assignee<span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Select
-                            value={subTaskAssignedUserId}
-                            onValueChange={(value) =>
-                              setSubTaskAssignedUserId(value)
-                            }
-                          >
-                            <SelectTrigger className="col-span-7 p-2 border rounded-md">
-                              <SelectValue placeholder="Select assignee" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Assignee</SelectLabel>
-                                {data?.map((user) => (
-                                  <SelectItem
-                                    key={user.username}
-                                    value={String(user.userId)!}
-                                  >
-                                    {user.username}
-                                  </SelectItem>
-                                ))}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <button
-                          type="submit"
-                          className={`flex w-200px mt-4 justify-center rounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                                hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                                  !isFormValid() || isLoadingCreateSubTask
-                                    ? "cursor-not-allowed opacity-50"
-                                    : ""
-                                }`}
-                          disabled={!isFormValid() || isLoadingCreateSubTask}
-                        >
-                          {isLoadingCreateSubTask
-                            ? "Creating..."
-                            : "Create SubTask"}
-                        </button>
-                      </DialogFooter>
-                    </form>
+                    <div className="flex flex-col gap-2">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Start Date
+                      </Label>
+                      <Input
+                        type="date"
+                        value={subTaskStartDate}
+                        onChange={(e) => setSubTaskStartDate(e.target.value)}
+                        className="col-span-3"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Due Date
+                      </Label>
+                      <Input
+                        type="date"
+                        value={subTaskDueDate}
+                        onChange={(e) => setSubTaskDueDate(e.target.value)}
+                        className="col-span-3"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Assignee
+                      </Label>
+                      <Select
+                        value={subTaskAssignedUserId}
+                        onValueChange={(value) =>
+                          setSubTaskAssignedUserId(value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select assignee" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Assignee</SelectLabel>
+                            {data?.map((user) => (
+                              <SelectItem
+                                key={user.username}
+                                value={String(user.userId)!}
+                              >
+                                {user.username}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex flex-col col-span-2 gap-2">
+                      <Label className="after:content-['*'] after:text-red-500 after:ml-1">
+                        Description
+                      </Label>
+                      <Textarea
+                        value={subTaskDescription}
+                        onChange={(e) => setSubTaskDescription(e.target.value)}
+                        className="col-span-7 shadow border"
+                      />
+                    </div>
                   </div>
-                </div>
-                <DialogFooter className="w-full justify-between items-center">
-                  <div className="absolute flex gap-4 left-10"></div>
-                  <div className="flex items-center space-x-2"></div>
-                </DialogFooter>
+
+                  <div className="flex items-center justify-end py-3 mt-3">
+                    <Button
+                      type="submit"
+                      className={` commonbtn ${
+                        !isFormValid() || isLoadingCreateSubTask
+                          ? "cursor-not-allowed opacity-50"
+                          : ""
+                      }`}
+                      disabled={!isFormValid() || isLoadingCreateSubTask}
+                    >
+                      {isLoadingCreateSubTask
+                        ? "Creating..."
+                        : "Create SubTask"}
+                    </Button>
+                  </div>
+                </form>
               </DialogContent>
             </Dialog>
           </>
         </div>
 
         {/* Line separator under Subtasks heading */}
-        <div className="mt-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
+        <div className="mt-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
         <div className="flex items-center justify-between mt-4"></div>
 
-        <div className="mt-4 space-y-2">
+        <div className="mt-4 space-y-2 b">
           {isLoadingSubTasks ? (
             <span className="text-gray-500 dark:text-gray-400">
               Loading subtasks...
@@ -1095,14 +1102,12 @@ const TaskPage = ({ taskId, email, projectId }: Props) => {
       </div>
 
       {/* Comments Section */}
-      <div className="space-y-4">
+      <div className="space-y-4 mt-3">
         <h2 className="text-xl font-semibold">Comments</h2>
         {/* Line separator under Comments heading */}
-        <div className="mt-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
-        <div className="border-2 border-gray-300 p-4 rounded-lg dark:border-gray-600">
-          <div className="mt-4 space-y-3">
-            <Comments taskId={taskId} email={email} taskCode={task?.code!} />
-          </div>
+        <div className="mt-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
+        <div className="border-1 border-gray-300 p-1  rounded-lg dark:border-gray-600">
+          <Comments taskId={taskId} email={email} taskCode={task?.code!} />
         </div>
       </div>
     </div>

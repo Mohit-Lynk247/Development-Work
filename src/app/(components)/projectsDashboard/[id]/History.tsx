@@ -144,7 +144,7 @@ const TaskHistory = ({ taskId, estimatedHours, task, fullPageFlag }: Props) => {
     return <div>An error occurred while fetching tasks</div>;
 
   return (
-    <div className="h-540px e-full px-4 pb-8 xl:px-6 mt-4">
+    <div className=" ">
       <DataGrid
         rows={[...(data || [])].sort((a, b) => a.id - b.id)}
         columns={columns}
@@ -153,21 +153,25 @@ const TaskHistory = ({ taskId, estimatedHours, task, fullPageFlag }: Props) => {
         disableColumnFilter={true}
       />
       {fullPageFlag ? (
-        <>
-          <div className="mt-4 p-4 bg-green-300 dark:bg-gray-800 rounded-lg flex justify-between items-center">
-            <span className="font-semibold text-lg">Estimated Hours</span>
+        <div className="flex flex-col gap-4 mt-5">
+          <div className=" p-2 bg-green-400 dark:bg-gray-800 px-3 rounded-full flex justify-between items-center">
+            <span className="font-semibold text-lg tracking-wider">
+              Estimated Hours
+            </span>
             <span className="font-bold text-lg">{estimatedHoursNum} hours</span>
           </div>
-          <div className="mt-4 p-4 bg-yellow-300 dark:bg-gray-800 rounded-lg flex justify-between items-center">
-            <span className="font-semibold text-lg">Total Consumed Hours</span>
+          <div className="p-2 bg-yellow-400 dark:bg-gray-800 px-3 rounded-full flex justify-between items-center">
+            <span className="font-semibold text-lg tracking-wider">
+              Total Consumed Hours
+            </span>
             <span className="font-bold text-lg">{consumedHours} hours</span>
           </div>
-          <div className="mt-4 p-4 bg-red-300 dark:bg-gray-800 rounded-lg flex justify-between items-center">
+          <div className="p-2 bg-pink-400 dark:bg-gray-800 px-3 rounded-full flex justify-between items-center">
             <span className="font-semibold text-lg">Total Hours Overrun</span>
             <span className="font-bold text-lg">{hoursOverrun} hours</span>
           </div>
           <div className="mt-4 p-4 flex justify-between items-center"></div>
-        </>
+        </div>
       ) : (
         ""
       )}

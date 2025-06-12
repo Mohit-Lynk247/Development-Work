@@ -239,13 +239,13 @@ const Header = ({
   );
 
   return (
-    <div className="flex relative w-full px-4 py-2   items-center justify-between">
+    <div className="flex relative w-full px-1 py-2   items-center justify-between">
       <h1
         className={`${
           isSmallText ? "text-lg" : "text-2xl"
         } font-semibold dark:text-white flex items-center text-maintext tracking-wider`}
       >
-        {icon}
+        <span className="text-iconcolor">{icon}</span>
         {name}
       </h1>
 

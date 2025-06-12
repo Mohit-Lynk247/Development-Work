@@ -113,7 +113,7 @@ const ProjectHeader = ({
         <div className="flex flex-1 bg-bgsecondary rounded-lg items-center gap-1 md:gap-4">
           <TabButton
             name="Kanban Board"
-            icon={<Grid3X3 className="h-5 w-5" />}
+            icon={<Grid3X3 size={20} />}
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
@@ -159,8 +159,8 @@ const TabButton = ({ name, icon, setActiveTab, activeTab }: TabButtonProps) => {
 
   return (
     <button
-      className={`relative flex items-center gap-2 px-1 py-2 text-gray-500 after:absolute after:-bottom-[4px] after:left-0 after:h-[1px] after:w-full hover:text-blue-600 dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4 ${
-        isActive ? "text-blue-600 after:bg-blue-600 dark:text-white" : ""
+      className={`relative text-sm  flex items-center gap-2 px-1 py-2 text-secondarytext after:absolute after:-bottom-[4px] font-semibold after:left-0 after:h-[1px] after:w-full hover:text-mainbtn dark:text-neutral-500 dark:hover:text-white sm:px-2 lg:px-4 ${
+        isActive ? "text-mainbtn after:bg-mainbtn dark:text-white" : ""
       }`}
       onClick={() => setActiveTab(name)}
     >

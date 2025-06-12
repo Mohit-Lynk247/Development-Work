@@ -8,6 +8,7 @@ import {
   EllipsisVertical,
   ChevronLeft,
   Timer,
+  Trash2,
 } from "lucide-react";
 import { SubTask, Task as TaskType } from "@/store/interfaces";
 import {
@@ -87,6 +88,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 const TaskPageFull = () => {
   const projectId = sessionStorage.getItem("projectId");
@@ -927,7 +929,7 @@ const TaskPageFull = () => {
     );
 
   return (
-    <div className="w-full max-h-full overflow-y-auto mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6 dark:bg-gray-800 dark:text-white">
+    <div className="w-full max-h-full overflow-y-auto mx-auto  p-6 bg-bgsecondary rounded-xl shadow-lg space-y-6 dark:bg-gray-800 dark:text-white">
       {/* Task Title and Description */}
       {isDialogOpen && (
         <ErrorDialog
@@ -942,10 +944,10 @@ const TaskPageFull = () => {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <button onClick={() => window.history.back()}>
-            <ChevronLeft className="mr-5" />
+            <ChevronLeft className="mr-5 text-iconcolor" />
           </button>
           {isTaskNameEditable ? (
-            <input
+            <Input
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
@@ -956,16 +958,14 @@ const TaskPageFull = () => {
             />
           ) : (
             <div className="flex items-center">
-              <div className="flex items-center">
-                <h1 className="text-3xl font-semibold">
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl text-maintext font-semibold">
                   {taskName} - {task?.code}
                 </h1>
 
                 <Pencil
                   size={16}
-                  className={`ml-2 cursor-pointer ${
-                    isHovered ? "opacity-100" : "opacity-0"
-                  } transition-opacity`}
+                  className="text-iconcolor hover:text-blue-700"
                   onClick={handleEditTaskNameClick}
                 />
               </div>
@@ -976,7 +976,10 @@ const TaskPageFull = () => {
               <>
                 <DropdownMenu>
                   <DropdownMenuTrigger className="flex h-8 w-6 mt-1 mr-3 flex-shrink-0 items-center justify-center dark:text-neutral-500">
-                    <EllipsisVertical size={52} className="dark:text-white" />
+                    <EllipsisVertical
+                      size={20}
+                      className="text-iconcolor hover:text-blue-700"
+                    />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <Dialog
@@ -1069,8 +1072,11 @@ const TaskPageFull = () => {
             ) : (
               <>
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="flex h-8 w-6 mt-1 flex-shrink-0 items-center justify-center dark:text-neutral-500">
-                    <EllipsisVertical size={52} className="dark:text-white" />
+                  <DropdownMenuTrigger className="focus:border-none focus:outline-none">
+                    <EllipsisVertical
+                      size={20}
+                      className="text-iconcolor hover:text-blue-700"
+                    />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem
@@ -1082,8 +1088,11 @@ const TaskPageFull = () => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
 
-                    <DropdownMenuLabel>Move Task To :</DropdownMenuLabel>
+                    <DropdownMenuLabel className="text-maintext">
+                      Move Task To :
+                    </DropdownMenuLabel>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task?.id!, "To Do");
                       }}
@@ -1091,6 +1100,7 @@ const TaskPageFull = () => {
                       To Do
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task?.id!, "Work In Progress");
                       }}
@@ -1098,6 +1108,7 @@ const TaskPageFull = () => {
                       Work In Progress
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task?.id!, "Under Review");
                       }}
@@ -1105,6 +1116,7 @@ const TaskPageFull = () => {
                       Under Review
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         moveTaskFromDropdown(task?.id!, "Completed");
                       }}
@@ -1113,6 +1125,7 @@ const TaskPageFull = () => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
+                      className="text-secondarytext"
                       onClick={() => {
                         closeTask(task?.id!);
                       }}
@@ -1123,12 +1136,9 @@ const TaskPageFull = () => {
                 </DropdownMenu>
                 {isTaskAssigned ? (
                   <>
-                    <button
-                      onClick={toggleProgress}
-                      className="px-4 py-2 text-white rounded-lg bg-black hover:bg-gray-300 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 "
-                    >
+                    <Button onClick={toggleProgress} className="commonbtn">
                       {isProgressStarted ? "Pause Progress" : "Start Progress"}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   ""
@@ -1144,7 +1154,7 @@ const TaskPageFull = () => {
               <div className="flex gap-4">
                 {" "}
                 {/* Use flex and gap to space inputs */}
-                <input
+                <Input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)} // Update state as user types
@@ -1153,7 +1163,7 @@ const TaskPageFull = () => {
                   className="border p-1 rounded w-30" // Style the input
                 />
                 -
-                <input
+                <Input
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)} // Update state as user types
@@ -1163,22 +1173,17 @@ const TaskPageFull = () => {
                 />
               </div>
             ) : (
-              <div className="flex items-center">
-                {/* Display the text */}
-                <div className="flex items-center">
-                  <span>
-                    {formatDate(startDate!)} - {formatDate(dueDate!)}
-                  </span>
+              <div className="flex items-center gap-2">
+                <span>
+                  {formatDate(startDate!)} - {formatDate(dueDate!)}
+                </span>
 
-                  {/* Pencil icon that appears when hovering over the parent */}
-                  <Pencil
-                    size={16}
-                    className={`ml-2 cursor-pointer ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    } transition-opacity`}
-                    onClick={handleDateEditClick}
-                  />
-                </div>
+                {/* Pencil icon that appears when hovering over the parent */}
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-blue-700"
+                  onClick={handleDateEditClick}
+                />
               </div>
             )}
             <>
@@ -1214,7 +1219,7 @@ const TaskPageFull = () => {
                 </Popover>
                 <div className="text-center text-lg font-semibold dark:text-white">
                   {isConsumedHoursEditable ? (
-                    <input
+                    <Input
                       type="text"
                       value={editedConsumedHours}
                       onChange={(e) =>
@@ -1228,7 +1233,7 @@ const TaskPageFull = () => {
                   ) : (
                     <div className="flex items-center">
                       <div className="flex items-center">
-                        <span className="cursor-pointer">
+                        <span className="cursor-pointer  ">
                           Consumed time: {editedConsumedHours}
                         </span>
                       </div>
@@ -1241,9 +1246,7 @@ const TaskPageFull = () => {
                       <>
                         <Pencil
                           size={16}
-                          className={`ml-2 cursor-pointer ${
-                            isHovered ? "opacity-100" : "opacity-0"
-                          } transition-opacity`}
+                          className="text-iconcolor hover:text-blue-700"
                           onClick={handleEditConsumedHoursClick}
                         />
                       </>
@@ -1260,7 +1263,7 @@ const TaskPageFull = () => {
 
           <div className="text-sm  flex justify-between items-center">
             {isEditable ? (
-              <input
+              <Input
                 type="text"
                 value={editedText}
                 onChange={(e) => setEditedText(Number(e.target.value))}
@@ -1270,24 +1273,20 @@ const TaskPageFull = () => {
                 className="border p-1 rounded w-24"
               />
             ) : (
-              <div className="flex items-center">
-                <div
-                  className="flex items-center"
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(true)}
-                >
-                  <span className="cursor-pointer">
-                    Estimated hours: {editedText}
-                  </span>
+              <div
+                className="flex items-center gap-2"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(true)}
+              >
+                <span className="cursor-pointer text-secondarytext">
+                  Estimated hours: {editedText}
+                </span>
 
-                  <Pencil
-                    size={16}
-                    className={`ml-2 cursor-pointer ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    } transition-opacity`}
-                    onClick={handleEditClick}
-                  />
-                </div>
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-blue-700"
+                  onClick={handleEditClick}
+                />
               </div>
             )}
           </div>
@@ -1300,47 +1299,47 @@ const TaskPageFull = () => {
 
           <div className="text-sm relative">
             {isAssigneeEditable ? (
-              <select
+              <Select
                 value={assignee}
-                onChange={(e) => setAssignee(e.target.value)}
-                onBlur={handleAssigneeBlur}
-                onKeyDown={handleKeyDown}
-                autoFocus
-                className="border p-1 rounded w-40"
+                onValueChange={(value) => setAssignee(value)}
               >
-                <option value="" defaultChecked={true}>
-                  Select
-                </option>
-                {users?.map((user) => (
-                  <option key={user.userId} value={user.username}>
-                    {user.username}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <div className="flex items-center">
-                <div
-                  className="flex items-center"
-                  onMouseEnter={() => setIsAssigneeHovered(true)}
-                  onMouseLeave={() => setIsAssigneeHovered(true)}
+                <SelectTrigger
+                  onBlur={handleAssigneeBlur}
+                  autoFocus
+                  onKeyDown={handleKeyDown}
                 >
-                  <span className="cursor-pointer">Assignee: {assignee}</span>
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {users?.map((user) => (
+                      <SelectItem key={user.userId} value={user.username}>
+                        {user.username}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            ) : (
+              <div
+                className="flex items-center gap-2"
+                onMouseEnter={() => setIsAssigneeHovered(true)}
+                onMouseLeave={() => setIsAssigneeHovered(true)}
+              >
+                <span className="cursor-pointer">Assignee: {assignee}</span>
 
-                  <Pencil
-                    size={16}
-                    className={`ml-2 cursor-pointer ${
-                      isAssigneeHovered ? "opacity-100" : "opacity-0"
-                    } transition-opacity`}
-                    onClick={handleEditAssigneeClick}
-                  />
-                </div>
+                <Pencil
+                  size={16}
+                  className="text-iconcolor hover:text-blue-700"
+                  onClick={handleEditAssigneeClick}
+                />
               </div>
             )}
           </div>
 
-          <div className="flex items-center text-sm relative">
+          <div className="flex items-center text-sm gap-2 relative">
             Priority:
-            <span className="text-gray-500 dark:text-gray-300 whitespace-nowrap">
+            <span className="text-secondarytext dark:text-gray-300 whitespace-nowrap">
               {task?.priority && <PriorityTag priority={task.priority} />}
             </span>
           </div>
@@ -1361,10 +1360,8 @@ const TaskPageFull = () => {
                 ))}
               </select>
             ) : (
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  <span className="cursor-pointer">Status: {taskStatus}</span>
-                </div>
+              <div className="flex items-center gap-2 text-secondarytext">
+                <span className="cursor-pointer">Status: {taskStatus}</span>
               </div>
             )}
           </div>
@@ -1382,7 +1379,7 @@ const TaskPageFull = () => {
                   <div
                     key={tag}
                     ref={index === 0 ? tagRef : null}
-                    className="rounded-full bg-blue-100 px-2 py-1 text-xs dark:text-black"
+                    className="rounded-full bg-mainborder/70 text-white px-2 py-1 text-xs dark:text-black"
                   >
                     {tag}
                   </div>
@@ -1393,7 +1390,7 @@ const TaskPageFull = () => {
 
         <div className="text-sm relative">
           {isDescriptionEditable ? (
-            <textarea
+            <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               onBlur={handleDescriptionBlur}
@@ -1418,7 +1415,7 @@ const TaskPageFull = () => {
               >
                 <Pencil
                   size={16}
-                  style={{ width: "16px", height: "16px" }}
+                  className="text-iconcolor hover:text-blue-700"
                   onClick={handleEditDescriptionClick}
                 />
               </div>
@@ -1427,15 +1424,15 @@ const TaskPageFull = () => {
         </div>
 
         <div className="flex justify-end">
-          <button
+          <Button
             onClick={handleSaveChanges}
             disabled={!isSaveButtonEnabled}
-            className={`mt-2 bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-700 ${
+            className={`commonbtn ${
               !isSaveButtonEnabled && "opacity-50 cursor-not-allowed"
             }`}
           >
             Save Changes
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -1445,38 +1442,42 @@ const TaskPageFull = () => {
         <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg dark:border-gray-600">
           <div className="flex items-center justify-between">
             <div className="flex space-x-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 {(task?.attachments?.length ?? 0) > 0 ? (
                   <>
                     <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                       <span className="text-2xl text-gray-500">📎</span>
                     </div>
-                    <span className="text-gray-800 dark:text-gray-100">
+                    <span className="text-secondarytext dark:text-gray-100">
                       {task?.attachments?.[0]?.fileName}
                     </span>
                     <button
-                      className="text-blue-600 hover:text-blue-800 ml-2"
+                      className=" hover:text-blue-800"
                       onClick={downloadAttachment}
                     >
-                      <Download />
+                      <Download size={20} className="text-iconcolor" />
                     </button>
                   </>
                 ) : (
-                  "Please upload a document of size less than 1 mb"
+                  <div className="text-red-500">
+                    Please upload a document of size less than 1 mb
+                  </div>
                 )}
               </div>
 
               {(task?.attachments?.length ?? 0) > 0 ? (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <button className="text-blue-600 hover:text-blue-800 ml-2">
-                      Delete
+                    <button className="text-iconcolor hover:text-blue-800">
+                      <Trash2 size={20} />
                     </button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                      <AlertDialogDescription className="text-gray-700">
+                      <AlertDialogTitle className="text-maintext">
+                        Are you sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-secondarytext">
                         Do you want to remove the Attachment ?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
@@ -1488,7 +1489,10 @@ const TaskPageFull = () => {
                       >
                         No
                       </AlertDialogCancel>
-                      <AlertDialogAction onClick={deleteAttachment}>
+                      <AlertDialogAction
+                        className="commonbtn w-20"
+                        onClick={deleteAttachment}
+                      >
                         Yes
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -1508,7 +1512,7 @@ const TaskPageFull = () => {
                 ""
               ) : (
                 <button
-                  className="flex items-center justify-start w-full p-3 text-blue-600 hover:text-blue-800 rounded-md hover:bg-gray-200 focus:outline-none transition duration-200"
+                  className="commonbtn"
                   onClick={() => document.getElementById("fileInput")?.click()}
                 >
                   + Add Attachment
@@ -1534,122 +1538,120 @@ const TaskPageFull = () => {
           <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <button className="flex items-center rounded-md bg-blue-600 px-3 py-2 text-white hover:bg-blue-500">
-                  <PlusSquare className="h-5 w-5 mr-2" />
+                <Button className="commonbtn flex items-center">
+                  <PlusSquare />
                   Add Subtasks
-                </button>
+                </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[50vw] lg:max-w-[60vw] max-h-[29vw] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="mb-1">Create SubTask</DialogTitle>
                 </DialogHeader>
 
-                <div className="relative w-full h-full overflow-hidden">
-                  <div className="top-0 left-0 w-[calc(100%)] h-[calc(100%)]">
-                    <form onSubmit={handleSubmit}>
-                      <div className="grid gap-4 py-1">
-                        <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                          <Label className="text-center">
-                            Task Name
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            value={subTaskName}
-                            onChange={handleChange}
-                            className="col-span-7"
-                            required
-                          />
-                          <Label className="text-center">
-                            Description
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <textarea
-                            value={subTaskDescription}
-                            onChange={(e) =>
-                              setSubTaskDescription(e.target.value)
-                            }
-                            className="col-span-7 shadow border"
-                          />
-                          <Label className="text-center">
-                            Start Date
-                            <span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={subTaskStartDate}
-                            onChange={(e) =>
-                              setSubTaskStartDate(e.target.value)
-                            }
-                            className="col-span-3"
-                          />
-                          <Label className="text-center">
-                            Due Date<span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Input
-                            type="date"
-                            value={subTaskDueDate}
-                            onChange={(e) => setSubTaskDueDate(e.target.value)}
-                            className="col-span-3"
-                          />
+                <form onSubmit={handleSubmit}>
+                  <div className=" grid  gap-4 grid-cols-2 py-2">
+                    <div className="flex flex-col gap-2">
+                      <Label>
+                        Task Name
+                        <span className="text-red-500 ml-1">*</span>
+                      </Label>
+                      <Input
+                        value={subTaskName}
+                        onChange={handleChange}
+                        required
+                        placeholder="Enter Task Name"
+                      />
+                    </div>
 
-                          <Label className="text-center">
-                            Assignee<span className="text-red-500 ml-1">*</span>
-                          </Label>
-                          <Select
-                            value={subTaskAssignedUserId}
-                            onValueChange={(value) =>
-                              setSubTaskAssignedUserId(value)
-                            }
-                          >
-                            <SelectTrigger className="col-span-7 p-2 border rounded-md">
-                              <SelectValue placeholder="Select assignee" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Assignee</SelectLabel>
-                                {data?.map((user) => (
-                                  <SelectItem
-                                    key={user.username}
-                                    value={String(user.userId)!}
-                                  >
-                                    {user.username}
-                                  </SelectItem>
-                                ))}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <button
-                          type="submit"
-                          className={`flex w-200px mt-4 justify-center rounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                                hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                                  !isFormValid() || isLoadingCreateSubTask
-                                    ? "cursor-not-allowed opacity-50"
-                                    : ""
-                                }`}
-                          disabled={!isFormValid() || isLoadingCreateSubTask}
-                        >
-                          {isLoadingCreateSubTask
-                            ? "Creating..."
-                            : "Create SubTask"}
-                        </button>
-                      </DialogFooter>
-                    </form>
+                    <div className="flex flex-col gap-2">
+                      <Label>
+                        Start Date
+                        <span className="text-red-500 ml-1">*</span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={subTaskStartDate}
+                        onChange={(e) => setSubTaskStartDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <Label>
+                        Due Date<span className="text-red-500 ml-1">*</span>
+                      </Label>
+                      <Input
+                        type="date"
+                        value={subTaskDueDate}
+                        onChange={(e) => setSubTaskDueDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <Label>
+                        Assignee<span className="text-red-500 ml-1">*</span>
+                      </Label>
+                      <Select
+                        value={subTaskAssignedUserId}
+                        onValueChange={(value) =>
+                          setSubTaskAssignedUserId(value)
+                        }
+                      >
+                        <SelectTrigger className=" p-2 border rounded-md">
+                          <SelectValue placeholder="Select assignee" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel className="text-maintext">
+                              Assignee
+                            </SelectLabel>
+                            {data?.map((user) => (
+                              <SelectItem
+                                className="text-secondarytext"
+                                key={user.username}
+                                value={String(user.userId)!}
+                              >
+                                {user.username}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex flex-col gap-2  col-span-2">
+                      <Label>
+                        Description
+                        <span className="text-red-500 ml-1">*</span>
+                      </Label>
+                      <Textarea
+                        value={subTaskDescription}
+                        onChange={(e) => setSubTaskDescription(e.target.value)}
+                      />
+                    </div>
                   </div>
-                </div>
-                <DialogFooter className="w-full justify-between items-center">
-                  <div className="absolute flex gap-4 left-10"></div>
-                  <div className="flex items-center space-x-2"></div>
-                </DialogFooter>
+                  <DialogFooter className="flex items-center justify-end py-1  w-full">
+                    <Button
+                      type="submit"
+                      className={`commonbtn ${
+                        !isFormValid() || isLoadingCreateSubTask
+                          ? "cursor-not-allowed opacity-50"
+                          : ""
+                      }`}
+                      disabled={!isFormValid() || isLoadingCreateSubTask}
+                    >
+                      {isLoadingCreateSubTask
+                        ? "Creating..."
+                        : "Create SubTask"}
+                    </Button>
+                  </DialogFooter>
+                </form>
               </DialogContent>
             </Dialog>
           </>
         </div>
 
         {/* Line separator under Subtasks heading */}
-        <div className="mt-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
+        <div className="mt-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
         <div className="flex items-center justify-between mt-4"></div>
 
         <div className="mt-4 space-y-2">
@@ -1673,8 +1675,8 @@ const TaskPageFull = () => {
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Comments</h2>
-        <div className="mt-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
-        <div className="border-2 border-gray-300 p-4 rounded-lg dark:border-gray-600">
+        <div className="mt-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
+        <div className="border-1 border-gray-300 p-4 rounded-lg dark:border-gray-600">
           <div className="mt-4 space-y-3">
             <Comments taskId={taskId} email={email!} taskCode={task?.code!} />
           </div>
@@ -1683,17 +1685,17 @@ const TaskPageFull = () => {
       <div className="space-y-4">
         <Tabs defaultValue="alerts" className="w-full">
           <TabsList className="grid  grid-cols-2 w-[400px] h-[44px]">
-            <TabsTrigger value="alerts" className="font-semibold text-lg">
+            <TabsTrigger value="alerts" className=" text-md">
               Task History
             </TabsTrigger>
-            <TabsTrigger value="activity" className="font-semibold text-lg ">
+            <TabsTrigger value="activity" className=" text-md ">
               Activity
             </TabsTrigger>
           </TabsList>
-          <div className="mt-2 mb-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
+          <div className="mt-2 mb-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
 
           <TabsContent value="alerts" className="w-full">
-            <Card>
+            <Card className="shadow-none">
               <TaskHistory
                 taskId={taskId}
                 estimatedHours={String(task?.points)!}
@@ -1703,7 +1705,7 @@ const TaskPageFull = () => {
             </Card>
           </TabsContent>
           <TabsContent value="activity">
-            <Card>
+            <Card className="shadow-none">
               <CardHeader>
                 <CardDescription>
                   {task?.title} - {task?.code} Activity

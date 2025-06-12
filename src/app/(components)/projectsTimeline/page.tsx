@@ -6,6 +6,13 @@ import "gantt-task-react/dist/index.css";
 import { useSearchParams } from "next/navigation";
 import { useGetProjectsQuery } from "@/store/api";
 import Header from "@/components/Header";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type taskTypeItems = "task" | "milestone" | "project";
 
@@ -17,7 +24,15 @@ const ProjectsTimeline = () => {
     data: projects,
     isLoading,
     error,
-  } = useGetProjectsQuery({ email: userEmail! });
+  } = useGetProjectsQuery({ email: userEmail!, closedFlag: false });
+
+  // style for timeline view
+  const defaultTaskStyle = {
+    backgroundColor: "#6366F1",
+    progressColor: "#10B981",
+    backgroundSelectedColor: "#4338CA",
+    progressSelectedColor: "#059669",
+  };
 
   const [displayOptions, setDisplayOptions] = useState<DisplayOption>({
     viewMode: ViewMode.Month,
@@ -47,6 +62,7 @@ const ProjectsTimeline = () => {
         type: "project" as taskTypeItems,
         progress: project.completionStatus,
         isDisabled: false,
+        styles: defaultTaskStyle,
       }));
   }, [projects]);
 
@@ -57,48 +73,51 @@ const ProjectsTimeline = () => {
     return <div>No Projects available.</div>;
   }
 
-  const handleViewModeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleViewModeChange = (value: String) => {
     setDisplayOptions((prev) => ({
       ...prev,
-      viewMode: event.target.value as ViewMode,
+      viewMode: value as ViewMode,
     }));
   };
 
   return (
-    <div className="px-4 xl:px-6">
-      <div className="flex flex-wrap items-center justify-between gap-2 py-5 ">
-        <div className="pb-6 pt-6 lg:pb-4 lg:pt-8 w-full">
-          <Header
-            name="Project Tasks Timeline"
-            hasFilters={false}
-            hasTeamFilter={false}
-          />
-        </div>
-        <div className="relative inline-block w-64">
-          <select
-            className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 pr-8 py-2 leading-right shadow hover:border-gray-500 focus:outline-none dark:border-dark-secondary dark:bg-dark-secondary dark:text-white"
+    <div className="  bg-bgsecondary p-2  mt-8 rounded-lg space-y-2">
+      <div className=" grid grid-cols-2  ">
+        <Header
+          name="Project Tasks Timeline"
+          hasFilters={false}
+          hasTeamFilter={false}
+        />
+
+        <div className=" flex items-center justify-end ">
+          <Select
             value={displayOptions.viewMode}
-            onChange={handleViewModeChange}
+            onValueChange={(value) => handleViewModeChange(value)}
           >
-            <option value={ViewMode.Day}>Day</option>
-            <option value={ViewMode.Week}>Week</option>
-            <option value={ViewMode.Month}>Month</option>
-          </select>
+            <SelectTrigger className="w-60">
+              <SelectValue placeholder="Select a value" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value={ViewMode.Day}>Day</SelectItem>
+              <SelectItem value={ViewMode.Week}>Week</SelectItem>
+              <SelectItem value={ViewMode.Month}>Month</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-      <div className="overflow-hidden rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
-        <div className="timeline">
-          <Gantt
-            tasks={ganttProjects}
-            {...displayOptions}
-            columnWidth={displayOptions.viewMode === ViewMode.Month ? 150 : 100}
-            listCellWidth="100px"
-            barBackgroundColor={isDarkMode ? "#101214" : "#aeb8c2"}
-            barBackgroundSelectedColor={isDarkMode ? "#000" : "#9ba1a6"}
-          />
-        </div>
+      <div className=" dark:bg-dark-secondary mt-7 dark:text-white">
+        <Gantt
+          tasks={ganttProjects}
+          {...displayOptions}
+          columnWidth={displayOptions.viewMode === ViewMode.Month ? 150 : 100}
+          listCellWidth="100px"
+          headerHeight={20}
+          // projectProgressColor="#4f46e5"
+          // barBackgroundColor={isDarkMode ? "#101214" : "#001742"}
+          // barBackgroundSelectedColor={isDarkMode ? "#000" : "#4f46e5"}
+          todayColor="#f8f6ff"
+        />
         <div className="px-4 pb-5 pt-1"></div>
       </div>
     </div>

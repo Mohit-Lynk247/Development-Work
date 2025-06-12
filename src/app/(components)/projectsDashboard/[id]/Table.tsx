@@ -9,13 +9,15 @@ import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import TaskPage from "./TaskPage";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@mui/material";
+
 import { FileDown } from "lucide-react";
 import CircularLoading from "@/components/Sidebar/loading";
 import { useTheme } from "next-themes";
 import { Card } from "@/components/ui/card";
 import SubTaskPage from "./(SubTask)/SubTaskPage";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import ViewButton from "@/components/customButton/viewButton";
 
 type Props = {
   projectId: string;
@@ -68,7 +70,7 @@ const TableView = ({
 
         switch (params.value) {
           case "To Do":
-            bgColor = "#2563EB";
+            bgColor = "#6366f1";
             textColor = "#ffffff";
             break;
           case "Work In Progress":
@@ -193,15 +195,15 @@ const TableView = ({
             {openViewOnly === true ? (
               <>
                 <Link href={`/task/${params.row.code}?email=${userEmail}`}>
-                  <Button
-                    variant="contained"
-                    className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
+                  {/* <Button className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105">
+                    View
+                  </Button> */}
+                  <ViewButton
                     onClick={() => {
                       sessionStorage.setItem("taskId", params.row.id);
                     }}
-                  >
-                    View
-                  </Button>
+                    text={"View"}
+                  />
                 </Link>
               </>
             ) : (
@@ -209,15 +211,10 @@ const TableView = ({
                 <Dialog>
                   <div className="my-3 flex justify-between">
                     <DialogTrigger asChild>
-                      <Button
-                        variant="contained"
-                        className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
-                      >
-                        View
-                      </Button>
+                      <ViewButton text={"View"} />
                     </DialogTrigger>
                   </div>
-                  <DialogContent className="max-w-[85vw] mt-5 mb-5 overflow-y-auto">
+                  <DialogContent className="max-w-6xl w-[80vw] max-h-[90vh]  overflow-y-auto">
                     {isTaskOrSubTask === "Task" ? (
                       <TaskPage
                         taskId={params.row.id}
@@ -386,18 +383,14 @@ const TableView = ({
   if (error) return <div>An error occurred while fetching tasks</div>;
 
   return (
-    <div className="h-full px-4 pb-8 xl:px-6">
-      <div className="pt-5 flex justify-between items-center mb-2">
-        <Header name="Table" isSmallText />
+    <div className="h-full  space-y-4 bg-bgsecondary p-1 ">
+      <div className=" flex justify-end items-center ">
+        {/* <Header name="Table" isSmallText /> */}
 
-        <button
-          className="flex items-center justify-center text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 px-6 py-2 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105 whitespace-nowrap"
-          style={{ height: "50px", padding: "0 16px" }}
-          onClick={handleExportToExcel}
-        >
-          <FileDown size={25} />
+        <Button className="commonbtn" onClick={handleExportToExcel}>
+          <FileDown size={10} />
           <span className="ml-2">Export to Excel</span>
-        </button>
+        </Button>
       </div>
       <Card>
         <DataGrid

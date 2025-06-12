@@ -14,6 +14,7 @@ import { useGetProjectTasksCalendarQuery } from "@/store/api";
 import { Maximize2 } from "lucide-react";
 import { Assignee } from "@/store/interfaces";
 import Link from "next/link";
+import "./../../../../lib/CustomCalender.css";
 
 type Props = {
   projectId: string;
@@ -75,6 +76,7 @@ const MyCalendar = ({
   );
 
   let resultList: Result[] = [];
+
 
   data?.map((task) => {
     const Result = {
@@ -194,29 +196,32 @@ const MyCalendar = ({
             {event.title}
           </div>
         </PopoverTrigger>
-        <PopoverContent className="w-80">
+        <PopoverContent className="w-80 bg-bgprimary">
           <div className="grid gap-4">
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <div className="justify-between items-center max-w-[15rem] overflow-hidden">
-                  <h4 className="font-medium whitespace-nowrap overflow-ellipsis overflow-hidden">
+                  <h4 className="font-semibold text-maintext whitespace-nowrap overflow-ellipsis overflow-hidden">
                     {event.title}
                   </h4>
                 </div>
 
                 <Link href={href}>
-                  <Maximize2 className="ml-3 cursor-pointer mt-0" />
+                  <Maximize2
+                    size={19}
+                    className=" text-iconcolor cursor-pointer "
+                  />
                 </Link>
               </div>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-secondarytext  max-h-[20vh] overflow-y-auto">
                 {event.description.split(" ").slice(0, 100).join(" ") +
                   (event.description.split(" ").length > 100 ? "..." : "")}
               </p>
             </div>
             <div className="grid gap-2">
               <div className="grid grid-cols-5 items-center gap-4">
-                <Label htmlFor="Status" className="col-span-2">
+                <Label htmlFor="Status" className="col-span-2 font-semibold">
                   Status
                 </Label>
                 <div className="w-full">
@@ -236,7 +241,7 @@ const MyCalendar = ({
                 </div>
               </div>
               <div className="grid grid-cols-5 items-center gap-4">
-                <Label htmlFor="maxWidth" className="col-span-2">
+                <Label htmlFor="maxWidth" className="col-span-2 font-semibold">
                   Assignee
                 </Label>
                 <Label
@@ -247,7 +252,7 @@ const MyCalendar = ({
                 </Label>
               </div>
               <div className="grid grid-cols-5 items-center gap-4">
-                <Label htmlFor="height" className="col-span-2">
+                <Label htmlFor="height" className="col-span-2 font-semibold">
                   Estimated Hours
                 </Label>
                 <Label
@@ -258,7 +263,10 @@ const MyCalendar = ({
                 </Label>
               </div>
               <div className="grid grid-cols-5 items-center gap-2">
-                <Label htmlFor="maxHeight" className="col-span-2">
+                <Label
+                  htmlFor="maxHeight"
+                  className="col-span-2  font-semibold"
+                >
                   Priority
                 </Label>
                 <Label
@@ -278,7 +286,7 @@ const MyCalendar = ({
   return (
     <div
       style={{ height: "80vh", width: "100%" }}
-      className="mt-5 ml-5 pr-6 w-screen"
+      className=" bg-bgsecondary p-2 w-screen"
     >
       <Calendar
         localizer={localizer}
@@ -295,7 +303,7 @@ const MyCalendar = ({
         onShowMore={handleEventClick}
         eventPropGetter={eventPropGetter}
         components={{
-          event: CustomEvent, // Custom event rendering with hover effects
+          event: CustomEvent,
         }}
       />
     </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import CircularLoading from "@/components/Sidebar/loading";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   useAddSubTaskCommentMutation,
   useGetMentionedUsersQuery,
@@ -107,9 +109,9 @@ const SubTaskComment = ({ subTaskId, email }: Props) => {
 
   return (
     <div className="w-full mx-auto p-4 bg-white overflow-y-auto rounded-lg shadow-lg">
-      <div className="max-h-[55vw] overflow-y-auto space-y-4 dark:text-white">
+      <div className="max-h-[35vh] overflow-y-auto space-y-4 dark:text-white">
         {data?.length === 0 ? (
-          <div className="text-center text-gray-500 dark:text-white">
+          <div className="text-center  text-secondarytext dark:text-white">
             <p>No comments yet</p>
           </div>
         ) : (
@@ -123,17 +125,20 @@ const SubTaskComment = ({ subTaskId, email }: Props) => {
             const formattedCommentTime = `${formattedDate} ${formattedTime}`;
 
             return (
-              <div key={index} className="border-b pb-4 dark:border-gray-200">
+              <div
+                key={index}
+                className=" space-y-[-8px] p-2 bg-bgprimary rounded-lg    dark:border-gray-200"
+              >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-lg">
+                  <span className="text-maintext  text-[0.8rem]">
                     {comment.username}
                   </span>
-                  <span className="text-sm text-gray-500 dark:text-white">
+                  <span className="text-xs  text-secondarytext dark:text-white">
                     {formattedCommentTime}
                   </span>
                 </div>
 
-                <p className="text-gray-800 dark:text-white">
+                <p className="text-maintext text-sm dark:text-white ">
                   {(() => {
                     const result = [];
                     let currentText = "";
@@ -195,14 +200,14 @@ const SubTaskComment = ({ subTaskId, email }: Props) => {
       </div>
 
       <div className="mt-4">
-        <textarea
+        <Textarea
           value={newComment}
           //onChange={(e) => setNewComment(e.target.value)}
           onChange={handleChange}
           onBlur={handleBlur}
           className="w-full p-2 border rounded-md shadow-sm resize-none"
           placeholder="Add a comment..."
-        ></textarea>
+        ></Textarea>
         {showDropdown && currentQuery && !loading && (
           <div
             className="left-0 bg-white border mt-1 rounded-md shadow-lg"
@@ -236,12 +241,12 @@ const SubTaskComment = ({ subTaskId, email }: Props) => {
           </div>
         )}
 
-        <button
+        <Button
           onClick={handleAddComment}
-          className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-500"
+          className="commonbtn mt-2"
         >
           Add Comment
-        </button>
+        </Button>
       </div>
     </div>
   );

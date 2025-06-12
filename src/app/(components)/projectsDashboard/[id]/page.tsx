@@ -44,7 +44,7 @@ const Project = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <ProjectHeader
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -59,61 +59,64 @@ const Project = () => {
         isTaskOrSubTask={isTaskOrSubTask}
         setIsTaskOrSubTask={setIsTaskOrSubTask}
       />
-      {activeTab === "Kanban Board" && (
-        <KanbanBoard
-          id={idFromUrl}
-          email={email!}
-          setIsModalNewTaskOpen={setIsModalNewTaskOpen}
-          priority={priority}
-          setPriority={setPriority}
-          assignedTo={assignedTo}
-          setAssignedTo={setAssignedTo}
-          sprint={sprint}
-          projectId={idFromUrl!}
-          isTaskOrSubTask={isTaskOrSubTask}
-          setIsTaskOrSubTask={setIsTaskOrSubTask}
-        />
-      )}
-      {activeTab === "Timeline" && (
-        <Timeline
-          projectId={idFromUrl!}
-          sprint={sprint}
-          email={email!}
-          assignedTo={assignedTo}
-          priority={priority}
-          isTaskOrSubTask={isTaskOrSubTask}
-        />
-      )}
-      {activeTab === "Table" && (
-        <TableView
-          projectId={idFromUrl!}
-          sprint={sprint}
-          assignedTo={assignedTo}
-          priority={priority}
-          isTaskOrSubTask={isTaskOrSubTask}
-          openViewOnly={false}
-        />
-      )}
-      {activeTab === "Calendar" && (
-        <MyCalendar
-          projectId={idFromUrl!}
-          sprint={sprint}
-          email={email!}
-          assignedTo={assignedTo}
-          priority={priority}
-          isTaskOrSubTask={isTaskOrSubTask}
-        />
-      )}
-      {activeTab === "User Workload" && (
-        <UserWorkload
-          projectId={idFromUrl!}
-          sprint={sprint}
-          email={email!}
-          assignedTo={assignedTo}
-          priority={priority}
-          isTaskOrSubTask={isTaskOrSubTask}
-        />
-      )}
+
+      <div className="mt-3   rounded-lg">
+        {activeTab === "Kanban Board" && (
+          <KanbanBoard
+            id={idFromUrl}
+            email={email!}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+            priority={priority}
+            setPriority={setPriority}
+            assignedTo={assignedTo}
+            setAssignedTo={setAssignedTo}
+            sprint={sprint}
+            projectId={idFromUrl!}
+            isTaskOrSubTask={isTaskOrSubTask}
+            setIsTaskOrSubTask={setIsTaskOrSubTask}
+          />
+        )}
+        {activeTab === "Timeline" && (
+          <Timeline
+            projectId={idFromUrl!}
+            sprint={sprint}
+            email={email!}
+            assignedTo={assignedTo}
+            priority={priority}
+            isTaskOrSubTask={isTaskOrSubTask}
+          />
+        )}
+        {activeTab === "Table" && (
+          <TableView
+            projectId={idFromUrl!}
+            sprint={sprint}
+            assignedTo={assignedTo}
+            priority={priority}
+            isTaskOrSubTask={isTaskOrSubTask}
+            openViewOnly={false}
+          />
+        )}
+        {activeTab === "Calendar" && (
+          <MyCalendar
+            projectId={idFromUrl!}
+            sprint={sprint}
+            email={email!}
+            assignedTo={assignedTo}
+            priority={priority}
+            isTaskOrSubTask={isTaskOrSubTask}
+          />
+        )}
+        {activeTab === "User Workload" && (
+          <UserWorkload
+            projectId={idFromUrl!}
+            sprint={sprint}
+            email={email!}
+            assignedTo={assignedTo}
+            priority={priority}
+            isTaskOrSubTask={isTaskOrSubTask}
+          />
+        )}
+      </div>
     </div>
   );
 };

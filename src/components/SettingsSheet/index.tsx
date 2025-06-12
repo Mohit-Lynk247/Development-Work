@@ -109,8 +109,8 @@ export function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className={"common-iconbtn"}>
-          <Settings size={20} />
+        <button className={"common-iconbtn "}>
+          <Settings size={20} className="text-iconcolor" />
         </button>
       </SheetTrigger>
       <SheetContent className="space-y-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Pencil, Download, Maximize2, Clock } from "lucide-react";
+import { Pencil, Download, Maximize2, Clock, Trash2 } from "lucide-react";
 import {
   useDeleteAttachmentMutation,
   useDownloadAttachmentMutation,
@@ -29,6 +29,8 @@ import SubTaskComment from "./SubTaskComments";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import ErrorDialog from "@/app/ErrorDialog";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
   subTaskId: number;
@@ -603,7 +605,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
   };
 
   return (
-    <div className="w-[80vw] max-h-[90vh] overflow-y-auto mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6 dark:bg-gray-800 dark:text-white">
+    <div className="w-[80vw] max-h-[75vh]  mb-5 overflow-y-auto  dark:bg-gray-800 dark:text-white">
       {isDialogOpen && (
         <ErrorDialog
           message={errorMessage}
@@ -614,24 +616,21 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
           onAdditionalButtonClick={handleAdditionalButtonClick}
         />
       )}
-      <div className="space-y-4">
+      <div className="space-y-2 px-2">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-2xl font-semibold text-maintext">
             {task?.title} - {task?.code}
           </h1>
-          <div className="flex space-x-4 ml-auto">
+          <div className="flex space-x-4 p-1  ml-auto">
             {task?.status! === "Closed" ? (
               ""
             ) : (
               <>
                 {isTaskAssigned ? (
                   <>
-                    <button
-                      onClick={toggleProgress}
-                      className="px-4 py-2 text-white rounded-lg bg-black hover:bg-gray-300 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 "
-                    >
+                    <Button onClick={toggleProgress} className="commonbtn">
                       {isProgressStarted ? "Pause Progress" : "Start Progress"}
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   ""
@@ -641,26 +640,26 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
             <Link
               href={`/projectsDashboard/${projectId}/subTask/${task?.code}?email=${email}`}
             >
-              <button
-                className="px-4 py-2 text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-300 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              <Button
+                className="commonbtn  w-12  "
                 onClick={() => {
                   sessionStorage.setItem("subTaskId", String(task?.id));
                 }}
               >
-                <Maximize2 />
-              </button>
+                <Maximize2 size={20} />
+              </Button>
             </Link>
           </div>
         </div>
 
-        <div className="space-y-4 text-gray-600 dark:text-gray-400">
+        <div className="space-y-4 text-secondarytext dark:text-gray-400">
           <div className="text-sm  flex justify-between items-center">
             <span>
               {formatDate(task?.startDate!)} - {formatDate(task?.dueDate!)}
             </span>
             <>
-              <span className="text-gray-600 text-lg inline-flex items-center mr-5">
-                <Clock className="mr-2 dark:text-white" />
+              <span className="text-secondarytext text-lg space-x-1 inline-flex items-center ">
+                <Clock className=" text-iconcolor dark:text-white" />
                 <div className="text-center text-lg font-semibold dark:text-white">
                   {isConsumedHoursEditable ? (
                     <input
@@ -676,11 +675,9 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                     />
                   ) : (
                     <div className="flex items-center">
-                      <div className="flex items-center">
-                        <span className="cursor-pointer">
-                          Consumed time: {editedConsumedHours}
-                        </span>
-                      </div>
+                      <span className="cursor-pointer">
+                        Consumed time: {editedConsumedHours}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -708,7 +705,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
           </div>
 
           <div className="text-sm">
-            <span className="ml-auto text-gray-500 dark:text-gray-300">
+            <span className="ml-auto text-secondarytext dark:text-gray-300">
               Author: {task?.author?.username}
             </span>
           </div>
@@ -736,7 +733,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                   onMouseEnter={() => setIsAssigneeHovered(true)}
                   onMouseLeave={() => setIsAssigneeHovered(true)}
                 >
-                  <span className="cursor-pointer">
+                  <span className="cursor-pointer text-secondarytext">
                     Assignee: {subTaskAssignee}
                   </span>
 
@@ -775,7 +772,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                   onMouseEnter={() => setIsStatusHovered(true)}
                   onMouseLeave={() => setIsStatusHovered(true)}
                 >
-                  <span className="cursor-pointer">
+                  <span className="cursor-pointer text-secondarytext">
                     Status: {subTaskStatus}
                   </span>
 
@@ -793,13 +790,12 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
 
           <div className="text-sm relative">
             {isDescriptionEditable ? (
-              <textarea
+              <Textarea
                 value={subTaskDescription}
                 onChange={(e) => setSubTaskDescription(e.target.value)}
                 onBlur={handleDescriptionBlur}
                 onKeyDown={handleKeyDown}
                 autoFocus
-                className="border p-1 rounded w-full h-24 resize-none"
               />
             ) : (
               <div
@@ -807,7 +803,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                 onMouseEnter={() => setIsDescriptionHovered(true)}
                 onMouseLeave={() => setIsDescriptionHovered(true)}
               >
-                <p className="text-gray-700 dark:text-gray-300 cursor-pointer">
+                <p className="text-secondarytext dark:text-gray-300 cursor-pointer">
                   {subTaskDescription || "Loading status..."}
                 </p>
 
@@ -840,42 +836,46 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Attachments</h2>
-          <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg dark:border-gray-600">
-            <div className="flex items-center justify-between">
-              <div className="flex space-x-4">
+          <h2 className="text-xl font-semibold text-maintext">Attachments</h2>
+          <div className="border-2 border-dashed border-gray-300 p-4    rounded-lg dark:border-gray-600">
+            <div className="flex items-center justify-between ">
+              <div className="flex space-x-2">
                 <div className="flex items-center space-x-2">
                   {(task?.attachments?.length ?? 0) > 0 ? (
                     <>
                       <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-2xl text-gray-500">📎</span>
+                        <span className="text-2xl text-secondarytext">📎</span>
                       </div>
-                      <span className="text-gray-800 dark:text-gray-100">
+                      <span className="text-secondarytext  text-sm dark:text-gray-100">
                         {task?.attachments?.[0]?.fileName}
                       </span>
                       <button
-                        className="text-blue-600 hover:text-blue-800 ml-2"
+                        className="text-iconcolor hover:text-blue-800 ml-2"
                         onClick={downloadAttachment}
                       >
-                        <Download />
+                        <Download size={20} />
                       </button>
                     </>
                   ) : (
-                    "Please upload a document of size less than 1 mb"
+                    <div className="text-red-500 ">
+                      Please upload a document of size less than 1 mb
+                    </div>
                   )}
                 </div>
 
                 {(task?.attachments?.length ?? 0) > 0 ? (
                   <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <button className="text-blue-600 hover:text-blue-800 ml-2">
-                        Delete
+                    <AlertDialogTrigger className="text-iconcolor" asChild>
+                      <button>
+                        <Trash2 size={20} />
                       </button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                        <AlertDialogDescription className="text-gray-700">
+                        <AlertDialogTitle className="text-maintext">
+                          Are you sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-secondarytext">
                           Do you want to remove the Attachment ?
                         </AlertDialogDescription>
                       </AlertDialogHeader>
@@ -884,10 +884,14 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                           onClick={() => {
                             //setOpen(false);
                           }}
+                          className="w-20"
                         >
                           No
                         </AlertDialogCancel>
-                        <AlertDialogAction onClick={deleteAttachment}>
+                        <AlertDialogAction
+                          className="commonbtn w-20"
+                          onClick={deleteAttachment}
+                        >
                           Yes
                         </AlertDialogAction>
                       </AlertDialogFooter>
@@ -898,7 +902,7 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
                 )}
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-2">
               <div>
                 {isLoadingUploadAttachment && (
                   <Progress value={uploadProgress} max={100} color="blue" />
@@ -929,11 +933,10 @@ const SubTaskPage = ({ subTaskId, email, projectId }: Props) => {
 
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Comments</h2>
-          <div className="mt-2 border-t-2 border-gray-300 dark:border-gray-600"></div>
-          <div className="border-2 border-gray-300 p-4 rounded-lg dark:border-gray-600">
-            <div className="mt-4 space-y-3">
-              <SubTaskComment subTaskId={subTaskId} email={email} />
-            </div>
+          <div className="mt-2 border-t-1 border-gray-300 dark:border-gray-600"></div>
+
+          <div className="mt-4 space-y-3">
+            <SubTaskComment subTaskId={subTaskId} email={email} />
           </div>
         </div>
       </div>

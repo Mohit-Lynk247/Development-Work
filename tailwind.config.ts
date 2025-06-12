@@ -16,9 +16,9 @@ export default {
       },
       colors: {
         //  main background color
-        bgprimary: "#e8ecef",
+        bgprimary: "#F1F5F9",
         //  color for secondary cards
-        bgsecondary: "#FFFFFF",
+        bgsecondary: "#ffffff",
         // main text color
         maintext: "#1F2937",
         //  secondary text color
@@ -28,7 +28,7 @@ export default {
         // / secondary btn color
         secondarybtn: "#eef0ff",
         // icon color
-        iconcolor: "#84888d",
+        iconcolor: "#6366f1",
         //  main border color
         mainborder: "#7f7aff",
         // color for side bar

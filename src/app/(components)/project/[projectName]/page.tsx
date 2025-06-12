@@ -728,7 +728,7 @@ const ProjectPage = () => {
                 })}
               </>
             ) : (
-              <span className="text-red-500 text-sm">
+              <span className="text-red-500  text-sm">
                 Please upload a document of size less than 1 MB
               </span>
             )}

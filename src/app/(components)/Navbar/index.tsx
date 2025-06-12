@@ -67,7 +67,7 @@ const Navbar = () => {
           badgeContent={Number(alertCountData?.count)}
           max={9}
         >
-          <Bell size={20} />
+          <Bell size={20} className="text-iconcolor" />
         </Badge>
       </Link>
 
@@ -87,7 +87,7 @@ const Navbar = () => {
       {/* user profile section  */}
       <div className="flex    items-center  gap-1 ">
         <User size={20} className="text-iconcolor  " />
-        <div className="text-iconcolor mt-1 text-lg">
+        <div className=" mt-1 text-sm">
           {data?.availableUsers} / {data?.totalUsers}
         </div>
       </div>

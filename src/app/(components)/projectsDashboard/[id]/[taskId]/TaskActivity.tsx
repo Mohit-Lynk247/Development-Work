@@ -75,23 +75,19 @@ const TaskActivity = ({ taskId }: Props) => {
 
   return (
     <div className="task-activity">
-      <h1>Activity - Logs</h1>
-      <div className="activity-list">
+      <h1 className="text-secondarytext font-semibold">Activity - Logs</h1>
+      <div className="activity-list mt-2  flex flex-col gap-2">
         {Array.isArray(data) &&
           data?.map((activity, index) => (
             <div
               key={index}
-              className="activity-item border-b pb-4 flex justify-between items-center"
+              className="activity-item  p-2 py-3 bg-gray-100 rounded-lg  flex justify-between items-center"
             >
               <div className="left-content ">
                 {activity.username != null && (
                   <Link href={`/user?email=${email}`} key={activity.username}>
                     <span
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        textDecoration: "underline",
-                      }}
+                      className="text-iconcolor text-md"
                       onClick={(e) => {
                         const content = (
                           e.target as HTMLElement
@@ -109,7 +105,7 @@ const TaskActivity = ({ taskId }: Props) => {
                   {formatActivityText(activity.activity)}
                 </span>{" "} */}
                 <span
-                  className={`activity ml-2 ${
+                  className={`activity ml-2 text-secondarytext text-sm font-medium ${
                     activity.activity.startsWith(" Reopened")
                       ? "bg-red-200"
                       : ""
@@ -120,7 +116,7 @@ const TaskActivity = ({ taskId }: Props) => {
                 {/* Activity description */}
               </div>
               <div className="right-content">
-                <span className="timestamp">{formatDate(activity.date)}</span>{" "}
+                <span className="timestamp text-secondarytext text-medium">{formatDate(activity.date)}</span>{" "}
                 {/* Timestamp on the extreme right */}
               </div>
             </div>

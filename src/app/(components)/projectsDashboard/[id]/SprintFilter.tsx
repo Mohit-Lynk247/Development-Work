@@ -32,6 +32,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
   sprint: string;
@@ -133,7 +134,7 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[180px] justify-between"
+          className="w-[180px] text-secondarytext justify-between"
         >
           {sprint
             ? data?.find((s) => s.id === Number(sprint))?.title
@@ -141,7 +142,7 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[180px] p-0">
+      <PopoverContent className="w-[180px]  p-0">
         <Command>
           <CommandList>
             <CommandGroup>
@@ -173,20 +174,19 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
                       <CircularProgress />
                     ) : (
                       <DialogContent
-                        className="sm:max-w-[42vw] lg:max-w-[42vw] max-h-[29vw] overflow-auto"
+                        className="  max-w-2xl overflow-auto"
                         onClick={(e) => e.stopPropagation()} // Prevent event propagation from DialogContent
                       >
                         <DialogHeader>
-                          <DialogTitle className="mb-2">
+                          <DialogTitle className=" mb-3  text-maintext">
                             Update Sprint
                           </DialogTitle>
                         </DialogHeader>
                         <form onSubmit={handleSubmit}>
-                          <div className="grid gap-4 py-3">
-                            <div className="grid grid-cols-8 items-center gap-4 mr-1">
-                              <Label className="text-center">
+                          <div className="space-y-3">
+                            <div className="flex flex-col gap-2">
+                              <Label className="after:content-['*']  after:ml-1 after:text-red-500">
                                 Sprint Title
-                                <span className="text-red-500 ml-1">*</span>
                               </Label>
                               <Input
                                 value={title}
@@ -194,20 +194,23 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
                                 className="col-span-7"
                                 required
                               />
+                            </div>
 
-                              <Label className="text-center">
+                            <div className="flex flex-col gap-2">
+                              <Label className="after:content-['*']  after:ml-1 after:text-red-500">
                                 Description
-                                <span className="text-red-500 ml-1">*</span>
                               </Label>
-                              <textarea
+                              <Textarea
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="col-span-7 shadow border"
                                 required
                               />
-                              <Label className="text-center">
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                              <Label className="after:content-['*']  after:ml-1 after:text-red-500">
                                 Start Date
-                                <span className="text-red-500 ml-1">*</span>
                               </Label>
                               <Input
                                 type="date"
@@ -216,10 +219,11 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
                                 className="col-span-3"
                                 required
                               />
+                            </div>
 
-                              <Label className="text-center">
+                            <div className="flex flex-col gap-2">
+                              <Label className="after:content-['*']  after:ml-1 after:text-red-500">
                                 End Date
-                                <span className="text-red-500 ml-1">*</span>
                               </Label>
                               <Input
                                 type="date"
@@ -230,21 +234,21 @@ export function SprintFilter({ sprint, setSprint, projectId }: Props) {
                               />
                             </div>
                           </div>
-                          <DialogFooter>
-                            <button
+
+                          <DialogFooter className="mt-6">
+                            <Button
                               type="submit"
-                              className={`flex w-200px mt-7 justify-center bg-blue-600 rounded-md border border-transparent bg-blue-primary px-4 py-2 text-base font-medium text-white shadow-sm 
-                          hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus-offset-2 ${
-                            !isFormValid() || isLoadingUpdateSprint
-                              ? "cursor-not-allowed opacity-50"
-                              : ""
-                          }`}
+                              className={`commonbtn ${
+                                !isFormValid() || isLoadingUpdateSprint
+                                  ? "cursor-not-allowed opacity-50"
+                                  : ""
+                              }`}
                               disabled={!isFormValid() || isLoadingUpdateSprint}
                             >
                               {isLoadingUpdateSprint
                                 ? "Updating..."
                                 : "Update Sprint"}
-                            </button>
+                            </Button>
                           </DialogFooter>
                         </form>
                       </DialogContent>

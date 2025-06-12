@@ -10,12 +10,9 @@ const page = () => {
   localStorage.removeItem("persist:root");
 
   return (
-    <div className="w-full sm:flex-row space-y-0 aspect-auto">
+    <div className="w-full mt-8 sm:flex-row space-y-0 bg-bgsecondary  p-2 rounded-lg aspect-auto">
       <ProjectsHeader name="Projects" buttonName="Create New Project" />
-
-      <div className="flex  h-full overflow-hidden">
-        <ProjectsTable email={userEmail!} closedProjectFlag={false} />
-      </div>
+      <ProjectsTable email={userEmail!} closedProjectFlag={false} />
     </div>
   );
 };
